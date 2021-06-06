@@ -13,7 +13,7 @@ public class MySQLAccess {
 
     public MySQLAccess() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             // Setup the connection with the DB
             connect = DriverManager.getConnection(url,username,password);
             createTables();
@@ -60,24 +60,24 @@ public class MySQLAccess {
                 "  likes int(11) NOT NULL,\n" +
                 "  PRIMARY KEY ( postId )\n" +
                 "  )");
-        statement.execute( "  " );
-        //statement.execute(" CREATE INDEX IF NOT EXISTS followIndex ON Following (followingUserID)");
+        /*statement.execute( "  " );
+        statement.execute(" CREATE INDEX IF NOT EXISTS followIndex ON Following (followingUserID)");
         try {
             Date date;
             statement.execute("INSERT INTO Users " +
                     "VALUES ( 302, 'MJM322', 'dalam', 'mj', 'mashal', '2021-02-03', 'hiii', 'mjm31.dalam@gmail.com' ) ");
-            /*statement.execute(" INSERT INTO Following " +
+            statement.execute(" INSERT INTO Following " +
                     "VALUES ( 22, 45)");
             statement.execute(" INSERT INTO Following " +
                     "VALUES (20, 44)");
             statement.execute(" INSERT INTO Following " +
                     "VALUES (21, 45)");
             statement.execute(" INSERT INTO Following " +
-                    "VALUES (21, 35)");*/
+                    "VALUES (21, 35)");
         }
         catch ( SQLDataException sqlException ) {
 
-        }
+        }*/
     }
 
 
