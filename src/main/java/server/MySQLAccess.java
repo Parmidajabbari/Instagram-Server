@@ -45,12 +45,24 @@ public class MySQLAccess {
                 "  CONSTRAINT user_info UNIQUE(username),\n" +
                 "  CONSTRAINT email_info UNIQUE(email)\n" +
                 ")");
+
+        // Create following and followers table
         statement.execute( "CREATE TABLE IF NOT EXISTS Following (\n" +
                 "    followingUserId INT, \n" +
                 "    followedUserId INT, \n" +
                 "    PRIMARY KEY (followingUserId, followedUserId ),\n" +
                 "    INDEX followIndex ( followingUserId, followedUserId )" +
                 ")" );
+
+        //Create Block table
+        statement.execute( "CREATE TABLE IF NOT EXISTS Block (\n" +
+                "    blockerId int(11) NOT NULL, \n" +
+                "    blockedId int(11) NOT NULL, \n" +
+                "    PRIMARY KEY (blockerId, blockedId ),\n" +
+                "    INDEX followIndex ( blockerId, blockedId )" +
+                ")" );
+
+        // Create Posts table
         statement.execute( "CREATE TABLE IF NOT EXISTS Posts (\n" +
                 "  postId int(11) NOT NULL AUTO_INCREMENT,\n" +
                 "  image mediumblob NOT NULL,\n" +
@@ -58,8 +70,45 @@ public class MySQLAccess {
                 "  userId int(11) NOT NULL,\n" +
                 "  caption varchar(255) DEFAULT NULL,\n" +
                 "  likes int(11) NOT NULL,\n" +
-                "  PRIMARY KEY ( postId )\n" +
+                "  PRIMARY KEY ( postId ),\n" +
+                "  INDEX userPosts ( userId, postId )\n " +
                 "  )");
+
+        // Create Likes table
+        statement.execute( " CREATE TABLE IF NOT EXISTS Likes ( \n" +
+                " postId int(11) NOT NULL ,\n" +
+                " userId int(11) NOT NULL ,\n" +
+                " PRIMARY KEY ( postId, userId ), \n" +
+                " INDEX likeIndex ( postId ) \n" +
+                " ) " );
+
+        // Create Comments table
+        statement.execute( " CREATE TABLE IF NOT EXISTS Comments ( \n" +
+                " commentId int(11) NOT NULL AUTO_INCREMENT, \n" +
+                " userId int(11) NOT NULL, \n" +
+                " postId int(11) NOT NULL, \n" +
+                " text varchar(255) DEFAULT NULL, \n" +
+                " likes int(11) NOT NULL, \n" +
+                " PRIMARY KEY ( commentId ), \n" +
+                " INDEX postComments ( postId, commentId )\n" +
+                " ) " );
+
+        // Create Replies table
+        statement.execute( " CREATE TABLE IF NOT EXISTS Replies ( \n" +
+                " replyId int(11) NOT NULL AUTO_INCREMENT, \n" +
+                " commentId int(11) NOT NULL, \n" +
+                " userId int(11) NOT NULL, \n" +
+                " postId int(11) NOT NULL, \n" +
+                " text varchar(255) DEFAULT NULL, \n" +
+                " likes int(11) NOT NULL, \n" +
+                " PRIMARY KEY ( replyId ), \n" +
+                " INDEX postComments ( commentId, replyId )\n" +
+                " ) "  );
+
+        // Create Direct table
+
+
+
         /*statement.execute( "  " );
         statement.execute(" CREATE INDEX IF NOT EXISTS followIndex ON Following (followingUserID)");
         try {
