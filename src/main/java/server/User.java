@@ -1,6 +1,5 @@
 package server;
 
-import javax.mail.MessagingException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,6 +14,8 @@ public class User {
     private long userId;
     private String bio;
     private static long idGenerate= 10^6;
+    private static String userNameError;
+    private static String passwordError;
 
     public User(String userName , String password , String email) {
         this.userName = userName;
@@ -32,57 +33,43 @@ public class User {
         Matcher checker = p.matcher(userName);
 
         if (checker.find()) {
-            System.out.println("invalid username");
+            userNameError = "invalid";
             return false;
         } else if (userName.contains(" ") || userName.equals("")) {
-            System.out.println("invalid username");
+            userNameError = "invalid";
             return false;
         }
         else if (userName.length() < 3 || userName.length() > 20) {
-            System.out.println("userName length must be between 4 and 20");
+            userNameError = "length";
             return false;
         }
         return true;
     }
-    //    public static boolean isUserNameUsed() {
-    //
-    //    }
+
+    public static String getUserNameError() {
+        return userNameError;
+    }
 
     public int getPassword() {
         return password;
     }
 
+    public static String getPasswordError() {
+        return passwordError;
+    }
 
     public static boolean isPasswordAcceptable(String password) {
         if(password.equals("") || password.contains(" ")) {
-            System.out.println("invalid password");
+            passwordError = "invalid";
             return false;
         }
         else if(password.length() < 5) {
-            System.out.println("invalid password length");
+            passwordError = "length";
             return false;
         }
         return true;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String handleEmail(String inputCode) throws MessagingException {
-        HandleEmail handleEmail = new HandleEmail(this.email);
-
-        boolean isValid = handleEmail.isValidEmail();
-        //boolean isRepeated = handleEmail.isEmailNotUsed(); // Database
-
-        if(isValid) // && isRepeated
-            return "email is not valid";
-        else if(!handleEmail.isVerified(inputCode))
-            return "wrong code!";
-        else
-            return "welcome";
-
-    }
 
     public void addFollower(User user) {
         followers.add(user.getUserId());
