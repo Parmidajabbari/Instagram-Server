@@ -1,6 +1,6 @@
 package server.requests;
 
-import server.ManagerHolder;
+import server.databaseManagement.ManagerHolder;
 
 import java.sql.SQLException;
 
@@ -8,7 +8,7 @@ abstract public class Task {
     protected String task;
     public int currentUserId;
 
-    abstract public void doTask(ManagerHolder managerHolder) throws SQLException;
+    abstract public String doTask(ManagerHolder managerHolder) throws SQLException;
 
     public String getTask() {
         return task;

@@ -1,6 +1,8 @@
-package server;//import server.requests.Task;
+package server.databaseManagement;//import server.requests.Task;
 
 import server.requests.Task;
+
+import java.sql.SQLException;
 
 public class TaskManager {
     private final ManagerHolder managerHolder;
@@ -9,11 +11,12 @@ public class TaskManager {
         this.managerHolder = managerHolder;
     }
 
-    public void doTask(String request){
+    public String doTask(String request) throws SQLException {
         Task task = TaskResolver.resolveTask(request);
         if (isUserSignedIn(task.currentUserId)) {
-            task.doTask(managerHolder);
+            return task.doTask(managerHolder);
         }
+        return null;
     }
 
     private boolean isUserSignedIn(int userId) {

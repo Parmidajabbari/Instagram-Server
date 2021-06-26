@@ -1,13 +1,13 @@
 package server.requests;
 
-import server.ManagerHolder;
+import server.databaseManagement.ManagerHolder;
 
 public class LogInTask extends server.requests.Task {
 
     private String password;
 
     @Override
-    public void doTask(ManagerHolder managerHolder) {
+    public String doTask(ManagerHolder managerHolder) {
 
     }
 

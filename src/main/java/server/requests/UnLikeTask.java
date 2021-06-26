@@ -1,13 +1,13 @@
 package server.requests;
 
-import server.ManagerHolder;
+import server.databaseManagement.ManagerHolder;
 
 public class UnLikeTask extends server.requests.Task {
 
     private int postId;
 
     @Override
-    public void doTask(ManagerHolder managerHolder) {
+    public String doTask(ManagerHolder managerHolder) {
 
     }
 

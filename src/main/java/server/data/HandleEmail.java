@@ -1,4 +1,4 @@
-package server;
+package server.data;
 
 import javax.mail.MessagingException;
 import java.util.Random;

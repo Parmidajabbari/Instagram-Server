@@ -1,4 +1,4 @@
-package server;
+package server.data;
 
 import java.util.ArrayList;
 import java.util.Date;

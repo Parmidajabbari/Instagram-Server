@@ -1,4 +1,4 @@
-package server;
+package server.data;
 
 public class Comment {
     private String comment;

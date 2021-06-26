@@ -1,4 +1,4 @@
-package server;
+package server.data;
 
 import com.sun.mail.smtp.SMTPTransport;
 

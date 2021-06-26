@@ -1,8 +1,11 @@
 package server;
 
+import server.databaseManagement.TaskHandler;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class TaskListener implements Runnable {
 
@@ -28,9 +31,10 @@ public class TaskListener implements Runnable {
                 String message = input.readUTF();
 
                 // doTask(message);
-
+                TaskHandler taskHandler = new TaskHandler(message);
+                taskHandler.doTask();
             }
-            catch (IOException e) {
+            catch (IOException | SQLException e) {
                 e.printStackTrace();
             }
         }

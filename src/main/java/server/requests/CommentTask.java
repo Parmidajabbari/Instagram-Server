@@ -1,7 +1,7 @@
 package server.requests;
 
-import server.ManagerHolder;
-import server.DatabaseOps;
+import server.databaseManagement.ManagerHolder;
+import server.databaseManagement.DatabaseOps;
 
 public class CommentTask extends Task {
 
@@ -9,7 +9,7 @@ public class CommentTask extends Task {
     private String comment;
 
     @Override
-    public void doTask(ManagerHolder managerHolder) {
+    public String doTask(ManagerHolder managerHolder) {
         DatabaseOps databaseOps = managerHolder.getDataBase();
         databaseOps.createComment();
         managerHolder.getNotificationManager().sendNotification(currentUserId);

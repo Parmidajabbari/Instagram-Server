@@ -1,4 +1,4 @@
-package server;
+package server.databaseManagement;
 
 public class ManagerHolderImpl2 implements ManagerHolder {
     private static DatabaseOps databaseOps = new DatabaseOps();

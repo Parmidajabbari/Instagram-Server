@@ -1,4 +1,4 @@
-package server;
+package server.databaseManagement;
 
 public interface ManagerHolder {
 

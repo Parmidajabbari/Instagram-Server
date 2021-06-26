@@ -1,4 +1,4 @@
-package server;
+package server.databaseManagement;
 
 import java.sql.*;
 
@@ -28,23 +28,26 @@ public class MySQLAccess {
 
     }
 
-    private void createTables() throws SQLException {
+    public void createTables() throws SQLException {
         statement = connect.createStatement();
 
         // Create Users table
         statement.execute( "CREATE TABLE IF NOT EXISTS Users (\n" +
-                "  userid int(11) NOT NULL AUTO_INCREMENT,\n" +
-                "  username varchar(25) DEFAULT NULL,\n" +
-                "  password varchar(25) DEFAULT NULL,\n" +
-                "  firstname varchar(45) NOT NULL,\n" +
-                "  lastname varchar(45) NOT NULL,\n" +
-                "  created date DEFAULT NULL,\n" +
-                "  bio varchar(255) DEFAULT NULL,\n" +
-                "  email varchar(255) DEFAULT NULL,\n" +
-                "  PRIMARY KEY (userid), \n" +
+                "  Id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
+                "  Username varchar(25) DEFAULT NULL,\n" +
+                "  Password varchar(25) DEFAULT NULL,\n" +
+                "  Firstname varchar(45) DEFAULT NULL,\n" +
+                "  Lastname varchar(45) DEFAULT NULL,\n" +
+                "  Created date DEFAULT NULL,\n" +
+                "  Bio varchar(255) DEFAULT NULL,\n" +
+                "  Email varchar(255) DEFAULT NULL,\n" +
+                "  FollowersNumber int(11) DEFAULT NULL,\n" +
+                "  FollowingNumber int(11) DEFAULT NULL,\n" +
+                //"  PRIMARY KEY (userid), \n" +
                 "  CONSTRAINT user_info UNIQUE(username),\n" +
                 "  CONSTRAINT email_info UNIQUE(email)\n" +
                 ")");
+        statement.execute( "ALTER TABLE Users AUTO_INCREMENT=100" );
 
         // Create following and followers table
         statement.execute( "CREATE TABLE IF NOT EXISTS Following (\n" +
@@ -103,7 +106,13 @@ public class MySQLAccess {
                 " likes int(11) NOT NULL, \n" +
                 " PRIMARY KEY ( replyId ), \n" +
                 " INDEX postComments ( commentId, replyId )\n" +
-                " ) "  );
+                " ) " );
+
+        statement.execute(" CREATE TABLE IF NOT EXISTS Verification ( \n " +
+                "  username varchar(25) DEFAULT NULL,\n" +
+                "  code int(5) NOT NULL,\n" +
+                "  PRIMARY KEY ( username ),\n" +
+                "  )" );
 
         // Create Direct table
 
