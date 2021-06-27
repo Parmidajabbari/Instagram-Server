@@ -27,7 +27,7 @@ public class DatabaseOps {
 
         //Statement statement = conn.createStatement();
         ResultSet resultSet;
-        String query = " SELECT COUNT(*) FROM Likes WHERE postId = ? AND userId = ? ";
+        String query = " SELECT * FROM Likes WHERE postId = ? AND userId = ? ";
         //resultSet = statement.executeQuery( " SELECT COUNT(*) FROM Likes WHERE " );
         PreparedStatement stat = conn.prepareStatement(query);
         String pi = "" + postId;
@@ -35,12 +35,11 @@ public class DatabaseOps {
         stat.setString(1, pi);
         stat.setString( 2, ui);
         resultSet = stat.executeQuery();
-        resultSet.last();
-        int like = resultSet.getRow();
-        if ( like > 0 ){
-            return true;
+        int like = 0;
+        while (resultSet.next()){
+            like ++;
         }
-        return false;
+        return like > 0;
     }
 
     public boolean likePost( int userId, int postId ) throws SQLException{
@@ -61,19 +60,19 @@ public class DatabaseOps {
 
     public boolean isBlocked( int blockedId, int blockerId ) throws SQLException{
         ResultSet resultSet;
-        String query = " SELECT COUNT(*) FROM Block WHERE blockerId = ? AND BlockedId = ? ";
+        String query = " SELECT * FROM Block WHERE blockerId = ? AND BlockedId = ? ";
         PreparedStatement stat = conn.prepareStatement(query);
         String br = "" + blockerId;
         String bd = "" + blockedId;
         stat.setString(1, br);
         stat.setString( 2, bd);
         resultSet = stat.executeQuery();
-        resultSet.last();
-        int block = resultSet.getRow();
-        if ( block > 0 ){
-            return true;
+        //resultSet.last();
+        int block = 0;
+        while (resultSet.next()){
+            block ++;
         }
-        return false;
+        return block > 0;
     }
 
     public boolean doesUsernameAlreadyExist( String username ) throws SQLException{
@@ -82,11 +81,11 @@ public class DatabaseOps {
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,username);
         resultSet = statement.executeQuery();
-        resultSet.last();
-        int usersNumber = resultSet.getRow();
-        if( usersNumber > 0 )
-            return true;
-        return false;
+        int usersNumber = 0;
+        while (resultSet.next()){
+            usersNumber ++;
+        }
+        return usersNumber > 0;
     }
 
     public boolean doesEmailAlreadyExist( String email ) throws SQLException{
@@ -95,11 +94,11 @@ public class DatabaseOps {
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,email);
         resultSet = statement.executeQuery();
-        resultSet.last();
-        int emailsNumber = resultSet.getRow();
-        if( emailsNumber > 0 )
-            return true;
-        return false;
+        int emailsNumber = 0;
+        while (resultSet.next()){
+            emailsNumber ++;
+        }
+        return emailsNumber > 0;
     }
 
     public void addNewVCode(String username, int code )throws SQLException{
@@ -122,8 +121,7 @@ public class DatabaseOps {
         while( resultSet.next() ){
             userCode = resultSet.getInt("code");
         }
-        if( code == userCode ) return true;
-        return false;
+        return code == userCode;
     }
 
     public int addNewUser (String username, String email, String password, Date created )throws SQLException{
@@ -144,12 +142,63 @@ public class DatabaseOps {
         ResultSet resultSet = stat.executeQuery(getId);
         int userId = 0;
         while (resultSet.next()){
-            userId = resultSet.getInt(0);
+            userId = resultSet.getInt(1);
         }
         return userId;
     }
 
+    public int usernameToID( String username )throws SQLException{
+        String query = "SELECT Id FROM Users WHERE Username = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, username);
+        ResultSet resultSet = statement.executeQuery();
+        int userId = -1;
+        while (resultSet.next() ){
+            userId = resultSet.getInt(1);
+        }
+        return userId;
+    }
 
+    public int loginUser( String username, String password )throws SQLException{
+        String query = " SELECT Id FROM Users WHERE Username = ? AND Password = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, username);
+        statement.setString(2, password);
+        ResultSet resultSet = statement.executeQuery();
+        int userId = -1;
+        while (resultSet.next() ){
+            userId = resultSet.getInt(1);
+        }
+        return userId;
+    }
 
+    public void followUser( int followerId, int followedId )throws SQLException{
+        String query = " INSERT INTO Following VALUES ( ? , ? ) ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, String.valueOf(followerId));
+        statement.setString(2, String.valueOf(followedId));
+        statement.execute();
+    }
+
+    public boolean isAFollowingB( int followerId, int followedId )throws SQLException{
+        String query = "SELECT * FROM Following WHERE followingUserId = ? AND followedUserId = ?";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, String.valueOf(followerId));
+        statement.setString(2, String.valueOf(followedId));
+        ResultSet resultSet = statement.executeQuery();
+        int isFollowed = 0;
+        while ( resultSet.next() ){
+            isFollowed ++;
+        }
+        return isFollowed > 0;
+    }
+
+    public void unFollowUser( int follower, int followed ) throws SQLException{
+        String query = " DELETE FROM Following WHERE followingUserId = ? AND followedUserId = ?";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, String.valueOf(follower));
+        statement.setString(2, String.valueOf(followed));
+        statement.execute();
+    }
 
 }

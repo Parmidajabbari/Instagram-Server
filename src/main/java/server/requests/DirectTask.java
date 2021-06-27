@@ -9,7 +9,7 @@ public class DirectTask extends server.requests.Task {
 
     @Override
     public String doTask(ManagerHolder managerHolder) {
-
+        return null;
     }
 
     // send the message to the other user

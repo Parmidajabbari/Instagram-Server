@@ -8,7 +8,7 @@ public class ProfileViewTask extends server.requests.Task {
 
     @Override
     public String doTask(ManagerHolder managerHolder) {
-
+        return null;
     }
 
     // send the data of the requested user to show it

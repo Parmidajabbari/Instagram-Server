@@ -9,7 +9,7 @@ public class BlockTask extends server.requests.Task {
 
     @Override
     public String doTask(ManagerHolder managerHolder) {
-
+return null;
     }
     // change the database and send a respond
 

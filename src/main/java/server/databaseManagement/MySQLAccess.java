@@ -109,9 +109,8 @@ public class MySQLAccess {
                 " ) " );
 
         statement.execute(" CREATE TABLE IF NOT EXISTS Verification ( \n " +
-                "  username varchar(25) DEFAULT NULL,\n" +
-                "  code int(5) NOT NULL,\n" +
-                "  PRIMARY KEY ( username ),\n" +
+                "  username varchar(25) NOT NULL PRIMARY KEY,\n" +
+                "  code int(5) NOT NULL" +
                 "  )" );
 
         // Create Direct table

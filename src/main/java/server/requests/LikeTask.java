@@ -16,6 +16,7 @@ public class LikeTask extends server.requests.Task {
         if( !databaseOps.isAlreadyLiked(currentUserId, postId) && !databaseOps.isBlocked(currentUserId, postOwner) && !databaseOps.isBlocked(postOwner,currentUserId)){
             databaseOps.likePost(currentUserId,postId);
         }
+        return null;
     }
 
     // like the post and add it to database

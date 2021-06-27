@@ -8,7 +8,7 @@ public class UnLikeTask extends server.requests.Task {
 
     @Override
     public String doTask(ManagerHolder managerHolder) {
-
+        return null;
     }
 
     // unlike a post and change it in database

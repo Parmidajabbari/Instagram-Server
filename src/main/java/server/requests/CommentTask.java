@@ -13,6 +13,7 @@ public class CommentTask extends Task {
         DatabaseOps databaseOps = managerHolder.getDataBase();
         databaseOps.createComment();
         managerHolder.getNotificationManager().sendNotification(currentUserId);
+        return null;
     }
 
 
