@@ -42,32 +42,29 @@ public class DatabaseOps {
         return like > 0;
     }
 
-    public boolean likePost( int userId, int postId ) throws SQLException{
-        try {
-            String query = " INSERT INTO Likes VALUES ( ? , ? )";
-            PreparedStatement statement = conn.prepareStatement(query);
-            String pi = "" + postId;
-            String ui = "" + userId;
-            statement.setString(1, pi);
-            statement.setString(2, ui);
-            statement.execute();
-            return true;
-        }
-        catch (Exception e){
-            return false;
-        }
+    public void likePost( int userId, int postId ) throws SQLException{
+        String query = " INSERT INTO Likes VALUES ( ? , ? )";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, String.valueOf(postId));
+        statement.setString(2, String.valueOf(userId));
+        statement.execute();
+    }
+
+    public void unlikePost( int userId, int postId ) throws SQLException{
+        String query = " DELETE FROM Likes WHERE postId = ? AND userId = ?";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, String.valueOf(postId));
+        statement.setString(2, String.valueOf(userId));
+        statement.execute();
     }
 
     public boolean isBlocked( int blockedId, int blockerId ) throws SQLException{
         ResultSet resultSet;
         String query = " SELECT * FROM Block WHERE blockerId = ? AND BlockedId = ? ";
         PreparedStatement stat = conn.prepareStatement(query);
-        String br = "" + blockerId;
-        String bd = "" + blockedId;
-        stat.setString(1, br);
-        stat.setString( 2, bd);
+        stat.setString(1, String.valueOf(blockerId));
+        stat.setString( 2, String.valueOf(blockedId));
         resultSet = stat.executeQuery();
-        //resultSet.last();
         int block = 0;
         while (resultSet.next()){
             block ++;
@@ -170,6 +167,22 @@ public class DatabaseOps {
             userId = resultSet.getInt(1);
         }
         return userId;
+    }
+
+    public void blockUser( int blockerId, int blockedId )throws SQLException{
+        String query = " INSERT INTO Block VALUES ( ? , ? ) ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, String.valueOf(blockerId));
+        statement.setString(2, String.valueOf(blockedId));
+        statement.execute();
+    }
+
+    public void unBlockUser( int blockerId, int blockedId ) throws SQLException{
+        String query = " DELETE FROM Block WHERE blockerId = ? AND blockedId = ?";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, String.valueOf(blockerId));
+        statement.setString(2, String.valueOf(blockedId));
+        statement.execute();
     }
 
     public void followUser( int followerId, int followedId )throws SQLException{

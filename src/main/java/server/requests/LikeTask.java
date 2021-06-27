@@ -13,10 +13,22 @@ public class LikeTask extends server.requests.Task {
     @Override
     public String doTask(ManagerHolder managerHolder) throws SQLException{
         DatabaseOps databaseOps = managerHolder.getDataBase();
-        if( !databaseOps.isAlreadyLiked(currentUserId, postId) && !databaseOps.isBlocked(currentUserId, postOwner) && !databaseOps.isBlocked(postOwner,currentUserId)){
-            databaseOps.likePost(currentUserId,postId);
+        String result;
+        try {
+            if (!databaseOps.isAlreadyLiked(currentUserId, postId) && !databaseOps.isBlocked(currentUserId, postOwner) && !databaseOps.isBlocked(postOwner, currentUserId)) {
+                databaseOps.likePost(currentUserId, postId);
+                result = "{'Task' : 'like', 'error' : false, 'Result' : 'You liked this post successfully!!'}";
+            }
+            else {
+                result = "{'Task' : 'like', 'error' : true, 'Result' : 'You cannot like this post!'}";
+
+            }
         }
-        return null;
+        catch (Exception e){
+            //System.out.println(e.getMessage());
+            result = "{'Task' : 'like', 'error' : true, 'Result' : 'something went wrong!'}";
+        }
+        return result;
     }
 
     // like the post and add it to database
