@@ -17,6 +17,7 @@ public class Post {
     private final String ownerName;
     private final String uploaded;
     private final int ownerId;
+    private boolean isLiked;
 
     public Post(Blob img, String caption, int likes, int comments, String ownerName, Date uploaded, int ownerId) throws SQLException {
         this.image = convertToString(img);
@@ -38,6 +39,10 @@ public class Post {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 
     private String convertToString(Blob blob ) throws SQLException {

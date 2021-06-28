@@ -19,10 +19,10 @@ public class SignUpPart2Task extends server.requests.Task {
         Date date = new Date(System.currentTimeMillis());
         try {
             int userId = databaseOps.addNewUser(username, email, password, date);
-            result = "{'Task' : 'SignUpPart2', 'error' : false, 'Result' : " + userId +" }";
+            result = "{'task' : 'SignUpPart2', 'error' : false, 'Result' : " + userId +" }";
         }
         catch (Exception e){
-            result = "{'Task' : 'SignUpPart2', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
+            result = "{'task' : 'SignUpPart2', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
         }
         return result;
     }

@@ -21,9 +21,13 @@ public class PostViewTask extends server.requests.Task {
                 result = "{'Task' : 'postView', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
             }
             else {
+                boolean isLiked = false;
+                if( databaseOps.isAlreadyLiked(currentUserId, postId) )
+                    isLiked = true;
                 post.setTask("postView");
                 post.setError(false);
                 post.setResult("done");
+                post.setLiked(isLiked);
                 result = new Gson().toJson(post);
             }
 

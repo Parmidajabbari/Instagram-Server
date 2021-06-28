@@ -45,6 +45,38 @@ public class DatabaseOps {
         statement.setInt(1, postId);
         statement.setInt(2, userId);
         statement.execute();
+        String query2 = " UPDATE Posts SET likes = likes + 1 WHERE postId = ? ";
+        PreparedStatement stat = conn.prepareStatement(query2);
+        stat.setInt(1, postId);
+        stat.execute();
+    }
+
+    public int addComment( int userId, int postId, String comment ) throws SQLException{
+        String q = " UPDATE Posts SET comments = comments + 1 WHERE postId = ? ";
+        PreparedStatement stat = conn.prepareStatement(q);
+        stat.setInt(1, postId);
+        stat.execute();
+
+        String query = " INSERT INTO Comments " +
+                " ( userId, postId, text, likes ) " +
+                " VALUES " +
+                " ( ? , ? , ? , ? )";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, userId);
+        statement.setInt(2, postId);
+        statement.setString(3, comment);
+        statement.setInt(4, 0);
+        statement.execute();
+
+        String getId = "SELECT LAST_INSERT_ID()";
+        Statement s = conn.createStatement();
+        ResultSet resultSet = s.executeQuery(getId);
+        int commentId = 0;
+        while (resultSet.next()){
+            commentId = resultSet.getInt(1);
+        }
+        return commentId;
+
     }
 
     public void unlikePost( int userId, int postId ) throws SQLException{
@@ -53,6 +85,10 @@ public class DatabaseOps {
         statement.setInt(1, postId);
         statement.setInt(2, userId);
         statement.execute();
+        String query2 = " UPDATE Posts SET likes = likes - 1 WHERE postId = ? ";
+        PreparedStatement stat = conn.prepareStatement(query2);
+        stat.setInt(1, postId);
+        stat.execute();
     }
 
     public boolean isBlocked( int blockedId, int blockerId ) throws SQLException{
