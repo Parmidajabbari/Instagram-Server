@@ -71,8 +71,10 @@ public class MySQLAccess {
                 "  image mediumblob NOT NULL,\n" +
                 "  uploaded date NOT NULL,\n" +
                 "  userId int(11) NOT NULL,\n" +
+                "  ownerName varchar(25) DEFAULT NULL,\n" +
                 "  caption varchar(255) DEFAULT NULL,\n" +
                 "  likes int(11) NOT NULL,\n" +
+                "  comments int(11) NOT NULL,\n" +
                 "  PRIMARY KEY ( postId ),\n" +
                 "  INDEX userPosts ( userId, postId )\n " +
                 "  )");
@@ -87,12 +89,11 @@ public class MySQLAccess {
 
         // Create Comments table
         statement.execute( " CREATE TABLE IF NOT EXISTS Comments ( \n" +
-                " commentId int(11) NOT NULL AUTO_INCREMENT, \n" +
+                " commentId int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY, \n" +
                 " userId int(11) NOT NULL, \n" +
                 " postId int(11) NOT NULL, \n" +
                 " text varchar(255) DEFAULT NULL, \n" +
                 " likes int(11) NOT NULL, \n" +
-                " PRIMARY KEY ( commentId ), \n" +
                 " INDEX postComments ( postId, commentId )\n" +
                 " ) " );
 

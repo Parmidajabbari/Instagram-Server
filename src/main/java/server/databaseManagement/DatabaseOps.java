@@ -1,5 +1,8 @@
 package server.databaseManagement;
 
+import server.data.Post;
+
+import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
 
 public class DatabaseOps {
@@ -24,17 +27,11 @@ public class DatabaseOps {
     }
 
     public boolean isAlreadyLiked( int userId, int postId ) throws SQLException {
-
-        //Statement statement = conn.createStatement();
-        ResultSet resultSet;
         String query = " SELECT * FROM Likes WHERE postId = ? AND userId = ? ";
-        //resultSet = statement.executeQuery( " SELECT COUNT(*) FROM Likes WHERE " );
         PreparedStatement stat = conn.prepareStatement(query);
-        String pi = "" + postId;
-        String ui = "" + userId;
-        stat.setString(1, pi);
-        stat.setString( 2, ui);
-        resultSet = stat.executeQuery();
+        stat.setInt(1, postId);
+        stat.setInt( 2, userId);
+        ResultSet resultSet = stat.executeQuery();
         int like = 0;
         while (resultSet.next()){
             like ++;
@@ -45,26 +42,25 @@ public class DatabaseOps {
     public void likePost( int userId, int postId ) throws SQLException{
         String query = " INSERT INTO Likes VALUES ( ? , ? )";
         PreparedStatement statement = conn.prepareStatement(query);
-        statement.setString(1, String.valueOf(postId));
-        statement.setString(2, String.valueOf(userId));
+        statement.setInt(1, postId);
+        statement.setInt(2, userId);
         statement.execute();
     }
 
     public void unlikePost( int userId, int postId ) throws SQLException{
         String query = " DELETE FROM Likes WHERE postId = ? AND userId = ?";
         PreparedStatement statement = conn.prepareStatement(query);
-        statement.setString(1, String.valueOf(postId));
-        statement.setString(2, String.valueOf(userId));
+        statement.setInt(1, postId);
+        statement.setInt(2, userId);
         statement.execute();
     }
 
     public boolean isBlocked( int blockedId, int blockerId ) throws SQLException{
-        ResultSet resultSet;
         String query = " SELECT * FROM Block WHERE blockerId = ? AND BlockedId = ? ";
         PreparedStatement stat = conn.prepareStatement(query);
-        stat.setString(1, String.valueOf(blockerId));
-        stat.setString( 2, String.valueOf(blockedId));
-        resultSet = stat.executeQuery();
+        stat.setInt(1, blockerId);
+        stat.setInt(2, blockedId);
+        ResultSet resultSet = stat.executeQuery();
         int block = 0;
         while (resultSet.next()){
             block ++;
@@ -73,11 +69,10 @@ public class DatabaseOps {
     }
 
     public boolean doesUsernameAlreadyExist( String username ) throws SQLException{
-        ResultSet resultSet;
         String query = " SELECT COUNT(*) FROM Users WHERE username = ? ";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,username);
-        resultSet = statement.executeQuery();
+        ResultSet resultSet = statement.executeQuery();
         int usersNumber = 0;
         while (resultSet.next()){
             usersNumber ++;
@@ -86,11 +81,10 @@ public class DatabaseOps {
     }
 
     public boolean doesEmailAlreadyExist( String email ) throws SQLException{
-        ResultSet resultSet;
         String query = " SELECT COUNT(*) FROM Users WHERE email = ? ";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,email);
-        resultSet = statement.executeQuery();
+        ResultSet resultSet = statement.executeQuery();
         int emailsNumber = 0;
         while (resultSet.next()){
             emailsNumber ++;
@@ -103,9 +97,9 @@ public class DatabaseOps {
                 "username = ? , code = ?";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,username);
-        statement.setString(2, String.valueOf(code));
+        statement.setInt(2, code);
         statement.setString(3,username);
-        statement.setString(4, String.valueOf(code));
+        statement.setInt(4, code);
         statement.execute();
     }
 
@@ -129,10 +123,10 @@ public class DatabaseOps {
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1, username);
         statement.setString(2, password);
-        statement.setString(3, created+"");
+        statement.setDate(3, created);
         statement.setString(4, email);
-        statement.setString(5, 0 + "");
-        statement.setString(6, 0 + "");
+        statement.setInt(5, 0);
+        statement.setInt(6, 0);
         statement.execute();
         String getId = "SELECT LAST_INSERT_ID()";
         Statement stat = conn.createStatement();
@@ -172,32 +166,32 @@ public class DatabaseOps {
     public void blockUser( int blockerId, int blockedId )throws SQLException{
         String query = " INSERT INTO Block VALUES ( ? , ? ) ";
         PreparedStatement statement = conn.prepareStatement(query);
-        statement.setString(1, String.valueOf(blockerId));
-        statement.setString(2, String.valueOf(blockedId));
+        statement.setInt(1, blockerId);
+        statement.setInt(2, blockedId);
         statement.execute();
     }
 
     public void unBlockUser( int blockerId, int blockedId ) throws SQLException{
         String query = " DELETE FROM Block WHERE blockerId = ? AND blockedId = ?";
         PreparedStatement statement = conn.prepareStatement(query);
-        statement.setString(1, String.valueOf(blockerId));
-        statement.setString(2, String.valueOf(blockedId));
+        statement.setInt(1, blockerId);
+        statement.setInt(2, blockedId);
         statement.execute();
     }
 
     public void followUser( int followerId, int followedId )throws SQLException{
         String query = " INSERT INTO Following VALUES ( ? , ? ) ";
         PreparedStatement statement = conn.prepareStatement(query);
-        statement.setString(1, String.valueOf(followerId));
-        statement.setString(2, String.valueOf(followedId));
+        statement.setInt(1, followerId);
+        statement.setInt(2, followedId);
         statement.execute();
     }
 
     public boolean isAFollowingB( int followerId, int followedId )throws SQLException{
         String query = "SELECT * FROM Following WHERE followingUserId = ? AND followedUserId = ?";
         PreparedStatement statement = conn.prepareStatement(query);
-        statement.setString(1, String.valueOf(followerId));
-        statement.setString(2, String.valueOf(followedId));
+        statement.setInt(1, followerId);
+        statement.setInt(2, followedId);
         ResultSet resultSet = statement.executeQuery();
         int isFollowed = 0;
         while ( resultSet.next() ){
@@ -209,9 +203,62 @@ public class DatabaseOps {
     public void unFollowUser( int follower, int followed ) throws SQLException{
         String query = " DELETE FROM Following WHERE followingUserId = ? AND followedUserId = ?";
         PreparedStatement statement = conn.prepareStatement(query);
-        statement.setString(1, String.valueOf(follower));
-        statement.setString(2, String.valueOf(followed));
+        statement.setInt(1, follower);
+        statement.setInt(2, followed);
         statement.execute();
+    }
+
+    public int addNewPost( Blob img, Date uploaded, int ownerId, String caption, String ownerName ) throws SQLException{
+        String query = " INSERT INTO Posts " +
+                " ( img, uploaded, userId, ownerName, caption, likes, comments ) " +
+                " VALUES " +
+                " ( ? , ? , ? , ? , ? )";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setBlob(1, img);
+        statement.setDate(2, uploaded);
+        statement.setInt(3, ownerId);
+        statement.setString(4, ownerName);
+        statement.setString(5, caption);
+        statement.setInt(6, 0);
+        statement.setInt(7, 0);
+        statement.execute();
+        String getId = "SELECT LAST_INSERT_ID()";
+        Statement stat = conn.createStatement();
+        ResultSet resultSet = stat.executeQuery(getId);
+        int userId = 0;
+        while (resultSet.next()){
+            userId = resultSet.getInt(1);
+        }
+        return userId;
+    }
+
+    public Post getPost( int postId ) throws SQLException{
+        String query = " SELECT * FROM Posts WHERE postId = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, postId);
+        ResultSet resultSet = statement.executeQuery();
+        Blob img = null;
+        Date uploaded = null;
+        int ownerId = 0;
+        String ownerName = null;
+        String caption = null;
+        int likes = 0;
+        int comments = 0;
+        boolean check = false;
+        while (resultSet.next()){
+            img = resultSet.getBlob("image");
+            uploaded = resultSet.getDate("uploaded");
+            ownerId = resultSet.getInt("userId");
+            ownerName = resultSet.getString("ownerName");
+            caption = resultSet.getString("caption");
+            likes = resultSet.getInt("likes");
+            comments = resultSet.getInt("comments");
+            check = true;
+        }
+        if(check)
+            return new Post(img, caption, likes, comments, ownerName, uploaded, ownerId);
+        return null;
+
     }
 
 }

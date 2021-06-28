@@ -16,10 +16,10 @@ public class SignUpPart1Task extends Task{
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         if( databaseOps.doesUsernameAlreadyExist(username) ){
-            result = "{'task' : 'SignUpPart1', 'error' : true, 'result' : 'Username Already Exists'}";
+            result = "{'Task' : 'SignUpPart1', 'error' : true, 'result' : 'Username Already Exists'}";
         }
         else if( databaseOps.doesEmailAlreadyExist(email) ){
-            result = "{'task' : 'SignUpPart1', 'error' : true, 'result' : 'Email Already Exists'}";
+            result = "{'Task' : 'SignUpPart1', 'error' : true, 'result' : 'Email Already Exists'}";
         }
         else {
             try {
