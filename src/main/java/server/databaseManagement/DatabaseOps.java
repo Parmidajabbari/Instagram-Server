@@ -1,30 +1,21 @@
 package server.databaseManagement;
 
 import server.data.Post;
+import server.data.Profile;
 
-import javax.sql.rowset.serial.SerialBlob;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class DatabaseOps {
 
     private final Connection conn;
-    private final MySQLAccess mySQLAccess;
 
-    public static void main( String[] args ) throws SQLException {
-        MySQLAccess mysql = new MySQLAccess();
-        mysql.createTables();
-        Connection conn = mysql.getConnect();
-        ManagerHolder managerHolder = new ManagerHolderImpl();
-    }
 
     public DatabaseOps (){
-        mySQLAccess = new MySQLAccess();
+        MySQLAccess mySQLAccess = new MySQLAccess();
         conn = mySQLAccess.getConnect();
     }
 
-    public void createComment(){
-
-    }
 
     public boolean isAlreadyLiked( int userId, int postId ) throws SQLException {
         String query = " SELECT * FROM Likes WHERE postId = ? AND userId = ? ";
@@ -46,6 +37,19 @@ public class DatabaseOps {
         statement.setInt(2, userId);
         statement.execute();
         String query2 = " UPDATE Posts SET likes = likes + 1 WHERE postId = ? ";
+        PreparedStatement stat = conn.prepareStatement(query2);
+        stat.setInt(1, postId);
+        stat.execute();
+    }
+
+
+    public void unlikePost( int userId, int postId ) throws SQLException{
+        String query = " DELETE FROM Likes WHERE postId = ? AND userId = ?";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, postId);
+        statement.setInt(2, userId);
+        statement.execute();
+        String query2 = " UPDATE Posts SET likes = likes - 1 WHERE postId = ? ";
         PreparedStatement stat = conn.prepareStatement(query2);
         stat.setInt(1, postId);
         stat.execute();
@@ -77,18 +81,6 @@ public class DatabaseOps {
         }
         return commentId;
 
-    }
-
-    public void unlikePost( int userId, int postId ) throws SQLException{
-        String query = " DELETE FROM Likes WHERE postId = ? AND userId = ?";
-        PreparedStatement statement = conn.prepareStatement(query);
-        statement.setInt(1, postId);
-        statement.setInt(2, userId);
-        statement.execute();
-        String query2 = " UPDATE Posts SET likes = likes - 1 WHERE postId = ? ";
-        PreparedStatement stat = conn.prepareStatement(query2);
-        stat.setInt(1, postId);
-        stat.execute();
     }
 
     public boolean isBlocked( int blockedId, int blockerId ) throws SQLException{
@@ -221,6 +213,17 @@ public class DatabaseOps {
         statement.setInt(1, followerId);
         statement.setInt(2, followedId);
         statement.execute();
+
+        String query2 = " UPDATE Users SET FollowingNumber = FollowingNumber + 1 WHERE Id = ? ";
+        PreparedStatement stat = conn.prepareStatement(query2);
+        stat.setInt(1, followerId);
+        stat.execute();
+
+        String q3 = " UPDATE Users SET FollowersNumber = FollowersNumber + 1 WHERE Id = ? ";
+        PreparedStatement s3 = conn.prepareStatement(q3);
+        s3.setInt(1, followedId);
+        s3.execute();
+
     }
 
     public boolean isAFollowingB( int followerId, int followedId )throws SQLException{
@@ -242,6 +245,17 @@ public class DatabaseOps {
         statement.setInt(1, follower);
         statement.setInt(2, followed);
         statement.execute();
+
+        String query2 = " UPDATE Users SET FollowingNumber = FollowingNumber - 1 WHERE Id = ? ";
+        PreparedStatement stat = conn.prepareStatement(query2);
+        stat.setInt(1, follower);
+        stat.execute();
+
+        String q3 = " UPDATE Users SET FollowersNumber = FollowersNumber - 1 WHERE Id = ? ";
+        PreparedStatement s3 = conn.prepareStatement(q3);
+        s3.setInt(1, followed);
+        s3.execute();
+
     }
 
     public int addNewPost( Blob img, Date uploaded, int ownerId, String caption, String ownerName ) throws SQLException{
@@ -295,6 +309,58 @@ public class DatabaseOps {
             return new Post(img, caption, likes, comments, ownerName, uploaded, ownerId);
         return null;
 
+    }
+
+    public Profile showProfile( int userId ) throws SQLException{
+        String query = " SELECT * FROM Users WHERE Id = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+        String userName = null;
+        String firstName = null;
+        String lastName = null;
+        Date created = null;
+        String bio = null;
+        int followersNumber = 0;
+        int followingNumber = 0;
+        boolean check = false;
+        while (resultSet.next()){
+            userName = resultSet.getString("Username");
+            firstName = resultSet.getString("Firstname");
+            lastName = resultSet.getString("Lastname");
+            created = resultSet.getDate("Created");
+            bio = resultSet.getString("Bio");
+            followersNumber = resultSet.getInt("FollowersNumber");
+            followingNumber = resultSet.getInt("FollowingNumber");
+            check = true;
+        }
+        if( check )
+            return new Profile(userName, firstName, lastName, created, bio, followersNumber, followingNumber);
+        return null;
+    }
+
+    public ArrayList<Integer> showUsersPosts ( int userId ) throws SQLException{
+        String query = " SELECT postId FROM Posts WHERE userId = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Integer> posts = new ArrayList<>();
+        while (resultSet.next()){
+            posts.add( resultSet.getInt("postId") );
+        }
+        return posts;
+    }
+
+    public ArrayList<Integer> showUsersFollowings ( int userId ) throws SQLException{
+        String query = " SELECT followedUserId FROM Following WHERE followingUserId = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Integer> followings = new ArrayList<>();
+        while (resultSet.next()){
+            followings.add( resultSet.getInt("followedUserId") );
+        }
+        return followings;
     }
 
 }

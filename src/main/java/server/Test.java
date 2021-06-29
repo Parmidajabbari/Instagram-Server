@@ -1,5 +1,6 @@
 package server;
 
+import com.google.gson.Gson;
 import server.databaseManagement.DatabaseOps;
 import server.databaseManagement.MySQLAccess;
 import server.databaseManagement.TaskHandler;
@@ -16,11 +17,13 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Test {
 
     public static void main(String[] args ) throws SQLException, IOException {
-        String task = "{ 'task' : 'unfollow', 'currentUserId' : 18, 'unFollowedUserId' : 14 }";
+       /* String task = "{ 'task' : 'unfollow', 'currentUserId' : 18, 'unFollowedUserId' : 14 }";
         //TaskHandler taskHandler = new TaskHandler(task);
         //DatabaseOps databaseOps = new DatabaseOps();
         //System.out.println(taskHandler.doTask());
@@ -35,6 +38,6 @@ public class Test {
         Date date = new Date(System.currentTimeMillis());
         statement.setDate(2, date);
         statement.setBlob(1, fin);
-        statement.execute();
+        statement.execute();*/
     }
 }

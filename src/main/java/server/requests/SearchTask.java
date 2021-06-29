@@ -1,5 +1,6 @@
 package server.requests;
 
+import server.databaseManagement.DatabaseOps;
 import server.databaseManagement.ManagerHolder;
 
 public class SearchTask extends server.requests.Task {
@@ -8,8 +9,21 @@ public class SearchTask extends server.requests.Task {
 
     @Override
     public String doTask(ManagerHolder managerHolder) {
-        return null;
+        DatabaseOps databaseOps = managerHolder.getDataBase();
+        String result;
+        try {
+            int res = databaseOps.usernameToID(searchedName);
+            if( res == -1 )
+                result = "{'task' : 'search', 'error' : true, 'result' : 'Nothing has found!'}";
+            else
+                result = "{'task' : 'search', 'error' : false, 'Result' : " + res +" }";
 
+        }
+        catch (Exception e){
+            result = "{'task' : 'search', 'error' : true, 'result' : 'something went wrong!'}";
+        }
+
+        return result;
     }
 
     // get the requested name from database and respond
