@@ -1,5 +1,6 @@
 package server.databaseManagement;
 
+import server.data.Comment;
 import server.data.Post;
 import server.data.Profile;
 
@@ -55,21 +56,22 @@ public class DatabaseOps {
         stat.execute();
     }
 
-    public int addComment( int userId, int postId, String comment ) throws SQLException{
+    public int addComment( int userId, int postId, String comment, String username ) throws SQLException{
         String q = " UPDATE Posts SET comments = comments + 1 WHERE postId = ? ";
         PreparedStatement stat = conn.prepareStatement(q);
         stat.setInt(1, postId);
         stat.execute();
 
         String query = " INSERT INTO Comments " +
-                " ( userId, postId, text, likes ) " +
+                " ( userId, postId, text, likes, username ) " +
                 " VALUES " +
-                " ( ? , ? , ? , ? )";
+                " ( ? , ? , ? , ? , ? )";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setInt(1, userId);
         statement.setInt(2, postId);
         statement.setString(3, comment);
         statement.setInt(4, 0);
+        statement.setString(5, username);
         statement.execute();
 
         String getId = "SELECT LAST_INSERT_ID()";
@@ -317,6 +319,7 @@ public class DatabaseOps {
         statement.setInt(1, userId);
         ResultSet resultSet = statement.executeQuery();
         String userName = null;
+        Blob proPic = null;
         String firstName = null;
         String lastName = null;
         Date created = null;
@@ -332,10 +335,11 @@ public class DatabaseOps {
             bio = resultSet.getString("Bio");
             followersNumber = resultSet.getInt("FollowersNumber");
             followingNumber = resultSet.getInt("FollowingNumber");
+            proPic = resultSet.getBlob("ProPic");
             check = true;
         }
         if( check )
-            return new Profile(userName, firstName, lastName, created, bio, followersNumber, followingNumber);
+            return new Profile(userName, firstName, lastName, created, bio, followersNumber, followingNumber, proPic);
         return null;
     }
 
@@ -361,6 +365,78 @@ public class DatabaseOps {
             followings.add( resultSet.getInt("followedUserId") );
         }
         return followings;
+    }
+
+    public void sendMessage (int senderId, int receiverId, Date created ) throws SQLException{
+        String query = " INSERT INTO Direct VALUES ( ? , ? , ? ) ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, senderId);
+        statement.setInt(2, receiverId);
+        statement.setDate(3, created);
+        statement.execute();
+    }
+
+    public void changeProfilePicture ( int userId, Blob img ) throws SQLException{
+        String query = " UPDATE Users SET ProPic = ? WHERE Id = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setBlob(1, img);
+        statement.setInt(2, userId);
+        statement.execute();
+    }
+
+    public Blob getProfilePicture ( int userId )throws SQLException{
+        String query = " SELECT ProPic FROM Users WHERE Id = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+        Blob img = null;
+        while (resultSet.next()){
+            img = resultSet.getBlob("ProPic");
+        }
+        return img;
+    }
+    public void changeBio( int userId, String bio ) throws SQLException{
+        String query = " UPDATE Users SET Bio = ? WHERE Id = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, bio);
+        statement.setInt(2, userId);
+        statement.execute();
+    }
+
+    public void changeUsername( int userId, String username ) throws SQLException{
+        String query = " UPDATE Users SET Username = ? WHERE Id = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setString(1, username);
+        statement.setInt(2, userId);
+        statement.execute();
+    }
+
+    public ArrayList<Integer> getCommentsList ( int postId ) throws SQLException{
+        String query = " SELECT commentId FROM Comments WHERE postId = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, postId);
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Integer> comments = new ArrayList<>();
+        while (resultSet.next()){
+            comments.add( resultSet.getInt("followedUserId") );
+        }
+        return comments;
+    }
+
+    public Comment showComment( int commentId ) throws SQLException{
+        String query = " SELECT * FROM Comments WHERE commentId = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, commentId);
+        ResultSet resultSet = statement.executeQuery();
+        String text = null;
+        int likes = 0;
+        String username = null;
+        while (resultSet.next()){
+            text = resultSet.getString("text");
+            likes = resultSet.getInt("likes");
+            username = resultSet.getString("username");
+        }
+        return new Comment(commentId, text, likes, username);
     }
 
 }

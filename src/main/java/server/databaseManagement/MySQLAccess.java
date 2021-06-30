@@ -43,9 +43,10 @@ public class MySQLAccess {
                 "  Email varchar(255) DEFAULT NULL,\n" +
                 "  FollowersNumber int(11) DEFAULT NULL,\n" +
                 "  FollowingNumber int(11) DEFAULT NULL,\n" +
+                "  ProPic mediumblob DEFAULT NULL,\n" +
                 //"  PRIMARY KEY (userid), \n" +
                 "  CONSTRAINT user_info UNIQUE(username),\n" +
-                "  CONSTRAINT email_info UNIQUE(email)\n" +
+                "  CONSTRAINT email_info UNIQUE(email)" +
                 ")");
         statement.execute( "ALTER TABLE Users AUTO_INCREMENT=100" );
 
@@ -76,7 +77,7 @@ public class MySQLAccess {
                 "  likes int(11) NOT NULL,\n" +
                 "  comments int(11) NOT NULL,\n" +
                 "  PRIMARY KEY ( postId ),\n" +
-                "  INDEX userPosts ( userId, postId )\n " +
+                "  INDEX userPosts ( userId, postId )" +
                 "  )");
 
         // Create Likes table
@@ -84,7 +85,7 @@ public class MySQLAccess {
                 " postId int(11) NOT NULL ,\n" +
                 " userId int(11) NOT NULL ,\n" +
                 " PRIMARY KEY ( postId, userId ), \n" +
-                " INDEX likeIndex ( postId ) \n" +
+                " INDEX likeIndex ( postId ) " +
                 " ) " );
 
         // Create Comments table
@@ -94,7 +95,8 @@ public class MySQLAccess {
                 " postId int(11) NOT NULL, \n" +
                 " text varchar(255) DEFAULT NULL, \n" +
                 " likes int(11) NOT NULL, \n" +
-                " INDEX postComments ( postId, commentId )\n" +
+                " username varchar(25) DEFAULT NULL,\n" +
+                " INDEX postComments ( postId, commentId )" +
                 " ) " );
 
         // Create Replies table
@@ -106,15 +108,22 @@ public class MySQLAccess {
                 " text varchar(255) DEFAULT NULL, \n" +
                 " likes int(11) NOT NULL, \n" +
                 " PRIMARY KEY ( replyId ), \n" +
-                " INDEX postComments ( commentId, replyId )\n" +
+                " INDEX postComments ( commentId, replyId )" +
                 " ) " );
 
+        // Create Verification code table
         statement.execute(" CREATE TABLE IF NOT EXISTS Verification ( \n " +
                 "  username varchar(25) NOT NULL PRIMARY KEY,\n" +
                 "  code int(5) NOT NULL" +
                 "  )" );
 
         // Create Direct table
+        statement.execute( " CREATE TABLE IF NOT EXISTS Direct (" +
+                "  sender int(11) NOT NULL, \n" +
+                "  receiver int(11) NOT NULL, \n" +
+                "  created date DEFAULT NULL, \n" +
+                "  INDEX message ( sender, receiver )" +
+                "  )" );
 
 
 

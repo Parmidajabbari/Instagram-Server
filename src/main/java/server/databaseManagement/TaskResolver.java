@@ -51,6 +51,18 @@ public class TaskResolver {
                 return gson.fromJson(raw, UnLikeTask.class);
             case "checkCode":
                 return gson.fromJson(raw, CheckCodeTask.class);
+            case "getProPic":
+                return gson.fromJson(raw, GetProPicTask.class);
+            case "changeProPic":
+                return gson.fromJson(raw, ChangeProPicTask.class);
+            case "changeBio":
+                return gson.fromJson(raw, ChangeBioTask.class);
+            case "changeUsername":
+                return gson.fromJson(raw, ChangeUsernameTask.class);
+            case "showCommentsList":
+                return gson.fromJson(raw, ShowCommentsListTask.class);
+            case "showComments":
+                return gson.fromJson(raw, ShowCommentsTask.class);
             default:
                 throw new IllegalStateException("Unexpected value: " + task.toLowerCase(Locale.ROOT));
         }
