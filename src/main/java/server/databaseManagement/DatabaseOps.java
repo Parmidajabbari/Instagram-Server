@@ -178,6 +178,18 @@ public class DatabaseOps {
         return userId;
     }
 
+    public String idToUsername( int userId ) throws SQLException{
+        String query = " SELECT Username FROM Users WHERE Id = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+        String username = null;
+        while(resultSet.next()){
+            username = resultSet.getString("Username");
+        }
+        return username;
+    }
+
     public int loginUser( String username, String password )throws SQLException{
         String query = " SELECT Id FROM Users WHERE Username = ? AND Password = ? ";
         PreparedStatement statement = conn.prepareStatement(query);
@@ -365,15 +377,6 @@ public class DatabaseOps {
         return followings;
     }
 
-    public void sendMessage (int senderId, int receiverId, Date created ) throws SQLException{
-        String query = " INSERT INTO Direct VALUES ( ? , ? , ? ) ";
-        PreparedStatement statement = conn.prepareStatement(query);
-        statement.setInt(1, senderId);
-        statement.setInt(2, receiverId);
-        statement.setDate(3, created);
-        statement.execute();
-    }
-
     public void changeProfilePicture ( int userId, Blob img ) throws SQLException{
         String query = " UPDATE Users SET ProPic = ? WHERE Id = ? ";
         PreparedStatement statement = conn.prepareStatement(query);
@@ -492,7 +495,7 @@ public class DatabaseOps {
         return chatId;
     }
 
-    public Message getMeesage(int messageId ) throws SQLException{
+    public Message getMessage(int messageId ) throws SQLException{
         String query = " SELECT * FROM Direct WHERE messageId = ? ";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setInt(1, messageId);
@@ -508,6 +511,34 @@ public class DatabaseOps {
             date = resultSet.getDate("created");
         }
         return new Message(senderId, receiverId, text, date);
+    }
+
+    public ArrayList<User> getFollowingList ( int userId ) throws SQLException{
+        String query = " SELECT followedUserId FROM Following WHERE followingUserId = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<User> followings = new ArrayList<>();
+        while (resultSet.next()){
+            int followingId = resultSet.getInt("followedUserId");
+            String followingName = idToUsername(followingId);
+            followings.add( new User(followingId, followingName) );
+        }
+        return followings;
+    }
+
+    public ArrayList<User> getFollowersList ( int userId ) throws SQLException{
+        String query = " SELECT followingUserId FROM Following WHERE followedUserId = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<User> followers = new ArrayList<>();
+        while (resultSet.next()){
+            int followerId = resultSet.getInt("followingUserId");
+            String followerName = idToUsername(followerId);
+            followers.add( new User(followerId, followerName) );
+        }
+        return followers;
     }
 
 

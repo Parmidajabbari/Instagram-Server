@@ -6,7 +6,7 @@ import server.databaseManagement.ManagerHolder;
 import java.sql.Date;
 import java.sql.SQLException;
 
-public class SendMessage extends Task{
+public class SendMessageTask extends Task{
 
     int receiverId;
     String text;

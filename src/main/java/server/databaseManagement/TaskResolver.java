@@ -31,9 +31,9 @@ public class TaskResolver {
                 return gson.fromJson(raw, NewPostTask.class);
             case "notification":
                 return gson.fromJson(raw, NotificationTask.class);
-            case "postview":
+            case "postView":
                 return gson.fromJson(raw, PostViewTask.class);
-            case "profileview":
+            case "profileView":
                 return gson.fromJson(raw, ProfileViewTask.class);
             case "search":
                 return gson.fromJson(raw, SearchTask.class);
@@ -43,11 +43,11 @@ public class TaskResolver {
                 return gson.fromJson(raw, SignUpPart2Task.class);
             case "timeline":
                 return gson.fromJson(raw, TimelineTask.class);
-            case "unblock":
+            case "unBlock":
                 return gson.fromJson(raw, UnBlockTask.class);
-            case "unfollow":
+            case "unFollow":
                 return gson.fromJson(raw, UnFollowTask.class);
-            case "unlike":
+            case "unLike":
                 return gson.fromJson(raw, UnLikeTask.class);
             case "checkCode":
                 return gson.fromJson(raw, CheckCodeTask.class);
@@ -63,6 +63,18 @@ public class TaskResolver {
                 return gson.fromJson(raw, ShowCommentsListTask.class);
             case "showComments":
                 return gson.fromJson(raw, ShowCommentsTask.class);
+            case "getFollowersList":
+                return gson.fromJson(raw, GetFollowersListTask.class);
+            case "getFollowingList":
+                return gson.fromJson(raw, GetFollowingListTask.class);
+            case "addConnection":
+                return gson.fromJson(raw, AddConnectionTask.class);
+            case "getMessagesId":
+                return gson.fromJson(raw, GetMessagesIdTask.class);
+            case "sendMessage":
+                return gson.fromJson(raw, SendMessageTask.class);
+            case "showMessages":
+                return gson.fromJson(raw, ShowMessagesTask.class);
             default:
                 throw new IllegalStateException("Unexpected value: " + task.toLowerCase(Locale.ROOT));
         }
