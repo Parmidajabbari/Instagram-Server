@@ -101,7 +101,7 @@ public class DatabaseOps {
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,username);
         ResultSet resultSet = statement.executeQuery();
-        int usersNumber = 0;
+        int usersNumber = -1;
         while (resultSet.next()){
             usersNumber ++;
         }
@@ -113,7 +113,7 @@ public class DatabaseOps {
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,email);
         ResultSet resultSet = statement.executeQuery();
-        int emailsNumber = 0;
+        int emailsNumber = -1;
         while (resultSet.next()){
             emailsNumber ++;
         }
