@@ -33,6 +33,7 @@ public class SignUpPart1Task extends Task{
             }
             catch (Exception e){
                 result = "{'task' : 'SignUpPart1', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
+                e.printStackTrace();
             }
         }
         return result;

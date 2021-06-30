@@ -99,7 +99,7 @@ public class MySQLAccess {
                 " INDEX postComments ( postId, commentId )" +
                 " ) " );
 
-        // Create Replies table
+        /* Create Replies table
         statement.execute( " CREATE TABLE IF NOT EXISTS Replies ( \n" +
                 " replyId int(11) NOT NULL AUTO_INCREMENT, \n" +
                 " commentId int(11) NOT NULL, \n" +
@@ -109,7 +109,7 @@ public class MySQLAccess {
                 " likes int(11) NOT NULL, \n" +
                 " PRIMARY KEY ( replyId ), \n" +
                 " INDEX postComments ( commentId, replyId )" +
-                " ) " );
+                " ) " );*/
 
         // Create Verification code table
         statement.execute(" CREATE TABLE IF NOT EXISTS Verification ( \n " +
@@ -117,11 +117,20 @@ public class MySQLAccess {
                 "  code int(5) NOT NULL" +
                 "  )" );
 
+        // Create Connection table
+        statement.execute( " CREATE TABLE IF NOT EXISTS Connection (" +
+                "  user1 int(11) NOT NULL, \n" +
+                "  user2 int(11) NOT NULL, \n" +
+                "  username2 varchar(25) DEFAULT NULL, \n" +
+                "  PRIMARY KEY ( user1, user2 )" +
+                "  )" );
+
         // Create Direct table
         statement.execute( " CREATE TABLE IF NOT EXISTS Direct (" +
                 "  sender int(11) NOT NULL, \n" +
                 "  receiver int(11) NOT NULL, \n" +
                 "  created date DEFAULT NULL, \n" +
+                "  text varchar(255) DEFAULT NULL, \n" +
                 "  INDEX message ( sender, receiver )" +
                 "  )" );
 

@@ -14,7 +14,7 @@ public class TaskResolver {
         JsonObject jsonObject = gson.fromJson(raw, JsonObject.class);
         String task = jsonObject.get("task").getAsString();
 
-        switch ( task.toLowerCase(Locale.ROOT) ){
+        switch ( task ){
             case "block":
                 return gson.fromJson(raw, BlockTask.class);
             case "comment":
@@ -27,7 +27,7 @@ public class TaskResolver {
                 return gson.fromJson(raw, LikeTask.class);
             case "login":
                 return gson.fromJson(raw, LogInTask.class);
-            case "newpost":
+            case "newPost":
                 return gson.fromJson(raw, NewPostTask.class);
             case "notification":
                 return gson.fromJson(raw, NotificationTask.class);
@@ -37,7 +37,7 @@ public class TaskResolver {
                 return gson.fromJson(raw, ProfileViewTask.class);
             case "search":
                 return gson.fromJson(raw, SearchTask.class);
-            case "signupPart1":
+            case "signUpPart1":
                 return gson.fromJson(raw, SignUpPart1Task.class);
             case "signupPart2":
                 return gson.fromJson(raw, SignUpPart2Task.class);

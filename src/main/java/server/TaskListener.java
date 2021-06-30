@@ -32,7 +32,8 @@ public class TaskListener implements Runnable {
 
                 // doTask(message);
                 TaskHandler taskHandler = new TaskHandler(message);
-                taskHandler.doTask();
+                String response = taskHandler.doTask();
+                output.writeUTF(response);
             }
             catch (IOException | SQLException e) {
                 e.printStackTrace();

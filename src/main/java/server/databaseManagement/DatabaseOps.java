@@ -3,6 +3,7 @@ package server.databaseManagement;
 import server.data.Comment;
 import server.data.Post;
 import server.data.Profile;
+import server.data.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -437,6 +438,37 @@ public class DatabaseOps {
             username = resultSet.getString("username");
         }
         return new Comment(commentId, text, likes, username);
+    }
+
+    public void addNewConnection( int currentUser, int secondUser, String currentUsername ,String secondUsername ) throws SQLException{
+        String query = " INSERT INTO Connection VALUES ( ? , ? , ? ) ";
+
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, currentUser);
+        statement.setInt(2, secondUser);
+        statement.setString(3, secondUsername);
+        statement.execute();
+
+        PreparedStatement stat = conn.prepareStatement(query);
+        stat.setInt(1, secondUser);
+        stat.setInt(2, currentUser);
+        stat.setString(3, currentUsername);
+        stat.execute();
+    }
+
+    public ArrayList<User> getConnectionsList (int userId ) throws SQLException{
+        String query = " SELECT ( user2 , username2 ) FROM Connection WHERE user1 = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, userId);
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<User> connections = new ArrayList<>();
+        while (resultSet.next()){
+            int user2Id = resultSet.getInt("user2");
+            String user2Name = resultSet.getString("username2");
+            User user = new User(user2Id, user2Name);
+            connections.add(user);
+        }
+        return connections;
     }
 
 }
