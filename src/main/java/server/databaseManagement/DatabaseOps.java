@@ -1,9 +1,6 @@
 package server.databaseManagement;
 
-import server.data.Comment;
-import server.data.Post;
-import server.data.Profile;
-import server.data.User;
+import server.data.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -470,5 +467,49 @@ public class DatabaseOps {
         }
         return connections;
     }
+
+    public void sendMessage (int senderId, int receiverId, Date date, String text ) throws SQLException{
+        String query = " INSERT INTO Direct ( sender, receiver, created, text ) VALUES ( ? , ? , ? , ? ) ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, senderId);
+        statement.setInt(2, receiverId);
+        statement.setDate(3, date);
+        statement.setString(4, text);
+        statement.execute();
+
+    }
+
+    public ArrayList<Integer> getChatId ( int senderId, int receiverId ) throws SQLException{
+        String query = " SELECT messageId FROM Direct WHERE sender = ? AND receiver = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, senderId);
+        statement.setInt(2, receiverId);
+        ResultSet resultSet = statement.executeQuery();
+        ArrayList<Integer> chatId = new ArrayList<>();
+        while (resultSet.next()){
+            chatId.add( resultSet.getInt("messageId") );
+        }
+        return chatId;
+    }
+
+    public Message getMeesage(int messageId ) throws SQLException{
+        String query = " SELECT * FROM Direct WHERE messageId = ? ";
+        PreparedStatement statement = conn.prepareStatement(query);
+        statement.setInt(1, messageId);
+        ResultSet resultSet = statement.executeQuery();
+        int senderId = 0;
+        int receiverId = 0;
+        String text = null;
+        Date date = null;
+        while (resultSet.next()){
+            senderId = resultSet.getInt("sender");
+            receiverId = resultSet.getInt("receiver");
+            text = resultSet.getString("text");
+            date = resultSet.getDate("created");
+        }
+        return new Message(senderId, receiverId, text, date);
+    }
+
+
 
 }

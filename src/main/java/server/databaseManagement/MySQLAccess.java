@@ -127,6 +127,7 @@ public class MySQLAccess {
 
         // Create Direct table
         statement.execute( " CREATE TABLE IF NOT EXISTS Direct (" +
+                "  messageId int(11) NOT NULL AUTO_INCREMENT,\n" +
                 "  sender int(11) NOT NULL, \n" +
                 "  receiver int(11) NOT NULL, \n" +
                 "  created date DEFAULT NULL, \n" +
