@@ -9,7 +9,7 @@ public class Post {
 
     private String task;
     private boolean error;
-    private String result;
+    private String Result;
     private final String image;
     private final String caption;
     private final int likes;
@@ -38,7 +38,7 @@ public class Post {
     }
 
     public void setResult(String result) {
-        this.result = result;
+        this.Result = result;
     }
 
     public void setLiked(boolean liked) {

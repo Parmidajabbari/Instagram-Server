@@ -6,13 +6,13 @@ public class CommentsList {
 
     String task;
     boolean error;
-    String result;
+    String Result;
     ArrayList<Integer> comments;
 
     public CommentsList(String task, boolean error, String result, ArrayList<Integer> comments) {
         this.task = task;
         this.error = error;
-        this.result = result;
+        this.Result = result;
         this.comments = comments;
     }
 

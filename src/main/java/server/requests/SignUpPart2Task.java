@@ -9,7 +9,7 @@ public class SignUpPart2Task extends server.requests.Task {
 
     private String password;
     private String email;
-    private String username;
+    private String currentUsername;
     private Date created;
 
     @Override
@@ -18,8 +18,8 @@ public class SignUpPart2Task extends server.requests.Task {
         String result;
         Date date = new Date(System.currentTimeMillis());
         try {
-            System.out.println(" given username :   " + username);
-            int userId = databaseOps.addNewUser(username, email, password, date);
+            System.out.println(" given username :   " + currentUsername);
+            int userId = databaseOps.addNewUser(currentUsername, email, password, date);
             result = "{'task' : 'signUpPart2', 'error' : false, 'Result' : " + userId +" }";
         }
         catch (Exception e){

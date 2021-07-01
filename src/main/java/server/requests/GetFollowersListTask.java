@@ -20,7 +20,7 @@ public class GetFollowersListTask extends Task {
             result = new Gson().toJson(res);
         }
         catch (Exception e){
-            result = "{'Task' : 'getFollowersList', 'error' : true, 'Result' : 'Something went wrong!'}";
+            result = "{'task' : 'getFollowersList', 'error' : true, 'Result' : 'Something went wrong!'}";
         }
         return result;
     }

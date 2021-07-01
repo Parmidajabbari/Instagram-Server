@@ -14,7 +14,7 @@ public class BlockTask extends server.requests.Task {
         String result;
         try {
             if( databaseOps.isBlocked(blockedUserId,currentUserId) ){
-                result = "{'Task' : 'block', 'error' : true, 'Result' : 'You cannot block this user!!'}";
+                result = "{'task' : 'block', 'error' : true, 'Result' : 'You cannot block this user!!'}";
             }
             else {
                 if(databaseOps.isAFollowingB(currentUserId, blockedUserId))
@@ -22,7 +22,7 @@ public class BlockTask extends server.requests.Task {
                 if(databaseOps.isAFollowingB(blockedUserId,currentUserId))
                     databaseOps.unFollowUser(blockedUserId,currentUserId);
                 databaseOps.blockUser(currentUserId, blockedUserId);
-                result = "{'Task' : 'block', 'error' : false, 'Result' : 'You have blocked this user successfully!!'}";
+                result = "{'task' : 'block', 'error' : false, 'Result' : 'You have blocked this user successfully!!'}";
             }
         }
         catch (Exception e){

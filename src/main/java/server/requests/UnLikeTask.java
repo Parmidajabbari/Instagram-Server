@@ -14,10 +14,10 @@ public class UnLikeTask extends server.requests.Task {
         try {
             if ( databaseOps.isAlreadyLiked(currentUserId, postId) ) {
                 databaseOps.unlikePost(currentUserId, postId);
-                result = "{'Task' : 'unlike', 'error' : false, 'Result' : 'You unliked this post successfully!!'}";
+                result = "{'task' : 'unlike', 'error' : false, 'Result' : 'You unliked this post successfully!!'}";
             }
             else {
-                result = "{'Task' : 'unlike', 'error' : true, 'Result' : 'You cannot unlike this post!'}";
+                result = "{'task' : 'unlike', 'error' : true, 'Result' : 'You cannot unlike this post!'}";
 
             }
         }

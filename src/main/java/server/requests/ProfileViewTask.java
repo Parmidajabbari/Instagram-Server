@@ -47,7 +47,7 @@ public class ProfileViewTask extends server.requests.Task {
 
         }
         catch (Exception e){
-            result = "{'Task' : 'postView', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
+            result = "{'task' : 'postView', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
         }
         return result;
     }

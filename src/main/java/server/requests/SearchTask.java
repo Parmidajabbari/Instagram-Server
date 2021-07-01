@@ -14,13 +14,13 @@ public class SearchTask extends server.requests.Task {
         try {
             int res = databaseOps.usernameToID(searchedName);
             if( res == -1 )
-                result = "{'task' : 'search', 'error' : true, 'result' : 'Nothing has found!'}";
+                result = "{'task' : 'search', 'error' : true, 'Result' : 'Nothing has found!'}";
             else
                 result = "{'task' : 'search', 'error' : false, 'Result' : " + res +" }";
 
         }
         catch (Exception e){
-            result = "{'task' : 'search', 'error' : true, 'result' : 'something went wrong!'}";
+            result = "{'task' : 'search', 'error' : true, 'Result' : 'something went wrong!'}";
         }
 
         return result;

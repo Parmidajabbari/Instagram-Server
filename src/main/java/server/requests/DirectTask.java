@@ -24,7 +24,7 @@ public class DirectTask extends server.requests.Task {
             result = new Gson().toJson(res);
         }
         catch (Exception e){
-            result = "{'Task' : 'direct', 'error' : true, 'Result' : 'Something went wrong!'}";
+            result = "{'task' : 'direct', 'error' : true, 'Result' : 'Something went wrong!'}";
         }
         return result;
     }

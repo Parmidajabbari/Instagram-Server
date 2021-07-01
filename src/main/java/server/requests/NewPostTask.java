@@ -20,14 +20,15 @@ public class NewPostTask extends server.requests.Task {
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         try {
+            ownerName = databaseOps.idToUsername(currentUserId);
             byte[] binaryImage = Base64.getDecoder().decode(image);
             Blob blob = new SerialBlob(binaryImage);
             Date date = new Date(System.currentTimeMillis());
             int postId = databaseOps.addNewPost(blob, date, currentUserId, caption, ownerName);
-            result = "{'Task' : 'newPost', 'error' : false, 'Result' : " + postId +" }";
+            result = "{'task' : 'newPost', 'error' : false, 'Result' : " + postId +" }";
         }
         catch (Exception e){
-            result = "{'Task' : 'newPost', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
+            result = "{'task' : 'newPost', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
         }
         return result;
     }

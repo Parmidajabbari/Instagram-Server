@@ -14,10 +14,10 @@ public class UnBlockTask extends server.requests.Task {
         try {
             if( databaseOps.isBlocked(unBlockedUserId, currentUserId) ){
                 databaseOps.unBlockUser(currentUserId, unBlockedUserId);
-                result = "{'Task' : 'unblock', 'error' : false, 'Result' : 'Unblocked successfully!'}";
+                result = "{'task' : 'unblock', 'error' : false, 'Result' : 'Unblocked successfully!'}";
             }
             else {
-                result = "{'Task' : 'unblock', 'error' : true, 'Result' : 'You cannot Unblock this user!'}";
+                result = "{'task' : 'unblock', 'error' : true, 'Result' : 'You cannot Unblock this user!'}";
             }
         }
         catch (Exception e){

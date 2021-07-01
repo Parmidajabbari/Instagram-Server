@@ -11,7 +11,7 @@ public class Profile {
 
     private String task;
     private boolean error;
-    private String result;
+    private String Result;
     private String userName;
     private String firstName;
     private String lastName;
@@ -43,7 +43,7 @@ public class Profile {
     }
 
     public void setResult(String result) {
-        this.result = result;
+        this.Result = result;
     }
 
     public void setFollowing(boolean following) {

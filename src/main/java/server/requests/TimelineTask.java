@@ -27,7 +27,7 @@ public class TimelineTask extends server.requests.Task {
             result = new Gson().toJson(timeLine);
         }
         catch (Exception e){
-            result = "{'Task' : 'timeline', 'error' : true, 'Result' : 'Something went wrong!'}";
+            result = "{'task' : 'timeline', 'error' : true, 'Result' : 'Something went wrong!'}";
         }
         return result;
 

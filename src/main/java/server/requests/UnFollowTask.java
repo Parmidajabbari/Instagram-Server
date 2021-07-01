@@ -13,11 +13,11 @@ public class UnFollowTask extends server.requests.Task {
         String result;
         try {
             if( !databaseOps.isAFollowingB(currentUserId, unFollowedUserId) ){
-                result = "{'Task' : 'unfollow', 'error' : true, 'Result' : 'You cannot Unfollow this user!'}";
+                result = "{'task' : 'unfollow', 'error' : true, 'Result' : 'You cannot Unfollow this user!'}";
             }
             else {
                 databaseOps.unFollowUser(currentUserId, unFollowedUserId);
-                result = "{'Task' : 'unfollow', 'error' : false, 'Result' : 'Unfollowed successfully!'}";
+                result = "{'task' : 'unfollow', 'error' : false, 'Result' : 'Unfollowed successfully!'}";
             }
         }
         catch (Exception e){

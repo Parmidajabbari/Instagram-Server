@@ -26,7 +26,7 @@ public class ShowCommentsTask extends Task{
             result = new Gson().toJson(res);
         }
         catch (Exception e){
-            result = "{'Task' : 'showComments', 'error' : true, 'Result' : 'Something went wrong!'}";
+            result = "{'task' : 'showComments', 'error' : true, 'Result' : 'Something went wrong!'}";
         }
         return result;
     }

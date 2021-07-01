@@ -6,13 +6,13 @@ public class Chat {
 
     String task;
     boolean error;
-    String result;
+    String Result;
     ArrayList<Message> messagesList;
 
     public Chat(String task, boolean error, String result, ArrayList<Message> messagesList) {
         this.task = task;
         this.error = error;
-        this.result = result;
+        this.Result = result;
         this.messagesList = messagesList;
     }
 

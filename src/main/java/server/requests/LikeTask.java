@@ -8,19 +8,19 @@ import java.sql.SQLException;
 public class LikeTask extends server.requests.Task {
 
     private int postId;
-    private int postOwner;
+    //private int postOwner;
 
     @Override
     public String doTask(ManagerHolder managerHolder) throws SQLException{
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         try {
-            if (!databaseOps.isAlreadyLiked(currentUserId, postId) && !databaseOps.isBlocked(currentUserId, postOwner) && !databaseOps.isBlocked(postOwner, currentUserId)) {
+            if (!databaseOps.isAlreadyLiked(currentUserId, postId)){// && !databaseOps.isBlocked(currentUserId, postOwner) && !databaseOps.isBlocked(postOwner, currentUserId)) {
                 databaseOps.likePost(currentUserId, postId);
-                result = "{'Task' : 'like', 'error' : false, 'Result' : 'You liked this post successfully!!'}";
+                result = "{'task' : 'like', 'error' : false, 'Result' : 'You liked this post successfully!!'}";
             }
             else {
-                result = "{'Task' : 'like', 'error' : true, 'Result' : 'You cannot like this post!'}";
+                result = "{'task' : 'like', 'error' : true, 'Result' : 'You cannot like this post!'}";
 
             }
         }

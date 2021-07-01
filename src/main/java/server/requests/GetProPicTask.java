@@ -18,10 +18,10 @@ public class GetProPicTask extends Task{
             int blobLength = (int) blob.length();
             byte[] binaryImg = blob.getBytes(1, blobLength);
             String res = Base64.getEncoder().encodeToString(binaryImg);
-            result = "{'Task' : 'getProPic', 'error' : false, 'Result' : '" + res +"' }";
+            result = "{'task' : 'getProPic', 'error' : false, 'Result' : '" + res +"' }";
         }
         catch (Exception e){
-            result = "{'Task' : 'getProPic', 'error' : true, 'Result' : 'Something went wrong!}";
+            result = "{'task' : 'getProPic', 'error' : true, 'Result' : 'Something went wrong!}";
         }
         return result;    }
 }

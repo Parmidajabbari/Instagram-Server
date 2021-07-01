@@ -22,7 +22,7 @@ public class GetMessagesIdTask extends Task{
             result = new Gson().toJson(res);
         }
         catch (Exception e){
-            result = "{'Task' : 'getMessagesId', 'error' : true, 'Result' : 'Something went wrong!'}";
+            result = "{'task' : 'getMessagesId', 'error' : true, 'Result' : 'Something went wrong!'}";
         }
         return result;
     }

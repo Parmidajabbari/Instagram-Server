@@ -13,14 +13,15 @@ public class LogInTask extends server.requests.Task {
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         try {
+            System.out.println( "username :   " + username + " password:  " + password);
             int userId = databaseOps.loginUser(username, password);
             if( userId == -1 )
-                result = "{'Task' : 'login', 'error' : true, 'Result' : 'Username or Password is wrong!'}";
+                result = "{'task' : 'login', 'error' : true, 'Result' : 'Username or Password is wrong!'}";
             else
-                result = "{'Task' : 'login', 'error' : false, 'Result' : " + userId +" }";
+                result = "{'task' : 'login', 'error' : false, 'Result' : " + userId +" }";
         }
         catch (Exception e){
-            result = "{'Task' : 'login', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
+            result = "{'task' : 'login', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
         }
         return result;
     }

@@ -9,7 +9,6 @@ public class CommentTask extends Task {
 
     private int postId;
     private String comment;
-    private int ownerId;
     private String username;
 
     @Override
@@ -17,6 +16,7 @@ public class CommentTask extends Task {
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         try {
+            username = databaseOps.idToUsername(currentUserId);
             int commentId = databaseOps.addComment(currentUserId, postId, comment, username);
             result = "{'task' : 'comment', 'error' : false, 'Result' : " + commentId +" }";
         }

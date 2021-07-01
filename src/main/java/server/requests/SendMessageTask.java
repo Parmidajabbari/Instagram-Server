@@ -18,11 +18,11 @@ public class SendMessageTask extends Task{
         try {
             Date date = new Date(System.currentTimeMillis());
             databaseOps.sendMessage(currentUserId, receiverId, date, text);
-            result = "{'Task' : 'sendMessage', 'error' : false, 'Result' : 'done'}";
+            result = "{'task' : 'sendMessage', 'error' : false, 'Result' : 'done'}";
 
         }
         catch (Exception e){
-            result = "{'Task' : 'sendMessage', 'error' : true, 'Result' : 'Something went wrong!'}";
+            result = "{'task' : 'sendMessage', 'error' : true, 'Result' : 'Something went wrong!'}";
         }
         return result;
     }

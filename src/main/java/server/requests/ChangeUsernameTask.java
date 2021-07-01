@@ -7,18 +7,18 @@ import java.sql.SQLException;
 
 public class ChangeUsernameTask extends Task{
 
-    String username;
+    String newUserName;
 
     @Override
     public String doTask(ManagerHolder managerHolder) throws SQLException {
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         try {
-            databaseOps.changeUsername(currentUserId, username);
-            result = "{'Task' : 'changeUsername', 'error' : false, 'Result' : 'done' }";
+            databaseOps.changeUsername(currentUserId, newUserName);
+            result = "{'task' : 'changeUsername', 'error' : false, 'Result' : 'done' }";
         }
         catch (Exception e){
-            result = "{'Task' : 'changeUsername', 'error' : true, 'Result' : 'Something went wrong!}";
+            result = "{'task' : 'changeUsername', 'error' : true, 'Result' : 'Something went wrong!}";
         }
         return result;        }
 }

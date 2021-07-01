@@ -15,16 +15,16 @@ public class FollowTask extends server.requests.Task {
         String result;
         try {
             if( databaseOps.isBlocked(currentUserId,followedUserId) || databaseOps.isBlocked(followedUserId,currentUserId) ){
-                result = "{'Task' : 'follow', 'error' : true, 'Result' : 'You cannot follow this user!!'}";
+                result = "{'task' : 'follow', 'error' : true, 'Result' : 'You cannot follow this user!!'}";
             }
             else {
                 databaseOps.followUser(currentUserId,followedUserId);
-                result = "{'Task' : 'follow', 'error' : false, 'Result' : 'You followed this user successfully!!'}";
+                result = "{'task' : 'follow', 'error' : false, 'Result' : 'You followed this user successfully!!'}";
             }
         }
         catch (Exception e){
             //System.out.println(e.getMessage());
-            result = "{'Task' : 'follow', 'error' : true, 'Result' : 'Something went wrong!'}";
+            result = "{'task' : 'follow', 'error' : true, 'Result' : 'Something went wrong!'}";
         };
         return result;
     }
