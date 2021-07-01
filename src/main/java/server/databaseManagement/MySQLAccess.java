@@ -125,7 +125,7 @@ public class MySQLAccess {
                 "  PRIMARY KEY ( user1, user2 )" +
                 "  )" );
 
-        // Create Direct table
+        /* Create Direct table
         statement.execute( " CREATE TABLE IF NOT EXISTS Direct (" +
                 "  messageId int(11) NOT NULL AUTO_INCREMENT,\n" +
                 "  sender int(11) NOT NULL, \n" +
@@ -133,7 +133,7 @@ public class MySQLAccess {
                 "  created date DEFAULT NULL, \n" +
                 "  text varchar(255) DEFAULT NULL, \n" +
                 "  INDEX message ( sender, receiver )" +
-                "  )" );
+                "  )" );*/
 
 
 

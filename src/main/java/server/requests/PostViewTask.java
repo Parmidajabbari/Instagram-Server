@@ -34,8 +34,10 @@ public class PostViewTask extends server.requests.Task {
                 Blob blob = post.getImage();
                 int blobLength = (int) blob.length();
                 byte[] binaryImg = blob.getBytes(1, blobLength);
-                transferImage.getOutput().writeUTF("{'task' : 'getImage'}");
+                // json post
+                transferImage.getOutput().writeUTF(result);
                 socket.sendMessage(binaryImg);
+                result = "{'task' : 'ignore', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
             }
         }
         catch (Exception e){
