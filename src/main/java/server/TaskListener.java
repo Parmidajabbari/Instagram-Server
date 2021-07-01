@@ -38,7 +38,7 @@ public class TaskListener implements Runnable {
                 output.writeUTF(response);
             }
             catch (IOException | SQLException e) {
-                e.printStackTrace();
+//                e.printStackTrace();
             }
         }
 

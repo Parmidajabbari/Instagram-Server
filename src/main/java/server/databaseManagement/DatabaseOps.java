@@ -42,10 +42,13 @@ public class DatabaseOps {
         statement.setInt(1, postId);
         statement.setInt(2, userId);
         statement.execute();
+        System.out.println("check likes table");
         String query2 = " UPDATE Posts SET likes = likes + 1 WHERE postId = ? ";
         PreparedStatement stat = conn.prepareStatement(query2);
         stat.setInt(1, postId);
         stat.execute();
+        System.out.println("check Posts table");
+
     }
 
 

@@ -15,7 +15,10 @@ public class LikeTask extends server.requests.Task {
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         try {
-            if (!databaseOps.isAlreadyLiked(currentUserId, postId)){// && !databaseOps.isBlocked(currentUserId, postOwner) && !databaseOps.isBlocked(postOwner, currentUserId)) {
+            System.out.println("entered likeTask");
+            if (!databaseOps.isAlreadyLiked(currentUserId, postId)){
+                // && !databaseOps.isBlocked(currentUserId, postOwner) && !databaseOps.isBlocked(postOwner, currentUserId)) {
+                System.out.println("not liked");
                 databaseOps.likePost(currentUserId, postId);
                 result = "{'task' : 'like', 'error' : false, 'Result' : 'You liked this post successfully!!'}";
             }
