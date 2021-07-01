@@ -3,24 +3,19 @@ package server.data;
 import java.sql.Blob;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.util.Base64;
 
 public class Post {
 
-    private String task;
-    private boolean error;
-    private String Result;
-    private final String image;
+    private final Blob image;
     private final String caption;
     private final int likes;
     private final int comments;
     private final String ownerName;
     private final String uploaded;
     private final int ownerId;
-    private boolean isLiked;
 
     public Post(Blob img, String caption, int likes, int comments, String ownerName, Date uploaded, int ownerId) throws SQLException {
-        this.image = convertToString(img);
+        this.image = img;
         this.caption = caption;
         this.likes = likes;
         this.comments = comments;
@@ -29,26 +24,33 @@ public class Post {
         this.ownerId = ownerId;
     }
 
-    public void setTask(String task) {
-        this.task = task;
+    public String getCaption() {
+        return caption;
     }
 
-    public void setError(boolean error) {
-        this.error = error;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setResult(String result) {
-        this.Result = result;
+    public int getComments() {
+        return comments;
     }
 
-    public void setLiked(boolean liked) {
-        isLiked = liked;
+    public String getOwnerName() {
+        return ownerName;
     }
 
-    private String convertToString(Blob blob ) throws SQLException {
-        int blobLength = (int) blob.length();
-        byte[] binaryImg = blob.getBytes(1, blobLength);
-        return Base64.getEncoder().encodeToString(binaryImg);
+    public String getUploaded() {
+        return uploaded;
+    }
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public int getOwnerId() {
+        return ownerId;
     }
 }
+
 

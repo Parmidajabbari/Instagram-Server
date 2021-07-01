@@ -1,9 +1,13 @@
 package server.requests;
 
 import com.google.gson.Gson;
+import server.SSSocket;
+import server.data.JsonPost;
 import server.data.Post;
 import server.databaseManagement.DatabaseOps;
 import server.databaseManagement.ManagerHolder;
+
+import java.sql.Blob;
 
 public class PostViewTask extends server.requests.Task {
 
@@ -24,13 +28,14 @@ public class PostViewTask extends server.requests.Task {
                 boolean isLiked = false;
                 if( databaseOps.isAlreadyLiked(currentUserId, postId) )
                     isLiked = true;
-                post.setTask("postView");
-                post.setError(false);
-                post.setResult("done");
-                post.setLiked(isLiked);
-                result = new Gson().toJson(post);
+                JsonPost jsonPost = new JsonPost(post, "postView", false, "done", isLiked);
+                result = new Gson().toJson(jsonPost);
+                SSSocket socket = transferImage.getSsSocket();
+                Blob blob = post.getImage();
+                int blobLength = (int) blob.length();
+                byte[] binaryImg = blob.getBytes(1, blobLength);
+                socket.sendMessage(binaryImg);
             }
-
         }
         catch (Exception e){
             result = "{'task' : 'postView', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
