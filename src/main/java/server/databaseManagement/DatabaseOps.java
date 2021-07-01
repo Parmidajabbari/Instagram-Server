@@ -139,6 +139,7 @@ public class DatabaseOps {
         int userCode = -1;
         while( resultSet.next() ){
             userCode = resultSet.getInt("code");
+            System.out.println(userCode);
         }
         return code == userCode;
     }

@@ -39,7 +39,7 @@ public class TaskResolver {
                 return gson.fromJson(raw, SearchTask.class);
             case "signUpPart1":
                 return gson.fromJson(raw, SignUpPart1Task.class);
-            case "signupPart2":
+            case "signUpPart2":
                 return gson.fromJson(raw, SignUpPart2Task.class);
             case "timeline":
                 return gson.fromJson(raw, TimelineTask.class);

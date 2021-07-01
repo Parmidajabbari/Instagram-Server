@@ -23,11 +23,11 @@ import java.util.Collections;
 public class Test {
 
     public static void main(String[] args ) throws SQLException, IOException {
-       /* String task = "{ 'task' : 'unfollow', 'currentUserId' : 18, 'unFollowedUserId' : 14 }";
-        //TaskHandler taskHandler = new TaskHandler(task);
-        //DatabaseOps databaseOps = new DatabaseOps();
-        //System.out.println(taskHandler.doTask());
-        String imgpath = "testimg.jpeg";
+        String task = "{ 'task' : 'checkCode', 'username' : 'mjmjm', 'code' : 9103 }";
+        TaskHandler taskHandler = new TaskHandler(task);
+        DatabaseOps databaseOps = new DatabaseOps();
+        System.out.println(taskHandler.doTask());
+        /*String imgpath = "testimg.jpeg";
         BufferedImage img = ImageIO.read(new File(imgpath));
         FileInputStream fin = new FileInputStream(imgpath);
         System.out.println(fin.toString());

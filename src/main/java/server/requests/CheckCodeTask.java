@@ -16,14 +16,17 @@ public class CheckCodeTask extends Task{
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         try {
-            if( databaseOps.isCodeCorrect(username, code) )
-                result = "{'task' : 'checkCode', 'error' : false, 'result' : 'The code was correct!'}";
+            System.out.println(code);
+            if( databaseOps.isCodeCorrect(username, code) ) {
+                System.out.println("coreccct");
+                result = "{'task' : 'checkCode', 'error' : false, 'Result' : 'The code was correct!'}";
+            }
             else
-                result = "{'task' : 'checkCode', 'error' : true, 'result' : 'The code was wrong!'}";
+                result = "{'task' : 'checkCode', 'error' : true, 'Result' : 'The code was wrong!'}";
 
         }
         catch (Exception e){
-            result = "{'task' : 'checkCode', 'error' : true, 'result' : 'Something went wrong!'}";
+            result = "{'task' : 'checkCode', 'error' : true, 'Result' : 'Something went wrong!'}";
         }
         return result;
     }

@@ -18,9 +18,9 @@ public class SignUpPart1Task extends Task{
         try {
             System.out.println("teeest");
             if (databaseOps.doesUsernameAlreadyExist(username))
-                result = "{'task' : 'SignUpPart1', 'error' : true, 'result' : 'Username Already Exists'}";
+                result = "{'task' : 'signUpPart1', 'error' : true, 'Result' : 'Username Already Exists'}";
             else if (databaseOps.doesEmailAlreadyExist(email))
-                result = "{'task' : 'SignUpPart1', 'error' : true, 'result' : 'Email Already Exists'}";
+                result = "{'task' : 'signUpPart1', 'error' : true, 'Result' : 'Email Already Exists'}";
             else {
                 int min = 1000, max = 9999;
                 int code = (int) Math.floor(Math.random() * (max - min + 1) + min);
@@ -29,11 +29,11 @@ public class SignUpPart1Task extends Task{
                 //GoogleMail.Send(email, title, message);
                 System.out.println(message);
                 databaseOps.addNewVCode(username, code);
-                result = "{'task' : 'SignUpPart1', 'error' : false, 'Result' : 'A code has been sent to your email.'}";
+                result = "{'task' : 'signUpPart1', 'error' : false, 'Result' : 'A code has been sent to your email.'}";
             }
         }
         catch (Exception e){
-            result = "{'task' : 'SignUpPart1', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
+            result = "{'task' : 'signUpPart1', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
             e.printStackTrace();
         }
         System.out.println(result);
