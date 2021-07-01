@@ -23,7 +23,7 @@ import java.util.Collections;
 public class Test {
 
     public static void main(String[] args ) throws SQLException, IOException {
-        String task = "{ 'task' : 'checkCode', 'username' : 'mjmjm', 'code' : 9103 }";
+        String task = "{ 'task' : 'signUpPart1', 'username' : 'mjuser1', 'email' : 'salam.g' }";
         TaskHandler taskHandler = new TaskHandler(task);
         DatabaseOps databaseOps = new DatabaseOps();
         System.out.println(taskHandler.doTask());

@@ -15,6 +15,9 @@ public class DatabaseOps {
         conn = mySQLAccess.getConnect();
     }
 
+    public void deleteCode(){
+
+    }
 
     public boolean isAlreadyLiked( int userId, int postId ) throws SQLException {
         String query = " SELECT * FROM Likes WHERE postId = ? AND userId = ? ";
