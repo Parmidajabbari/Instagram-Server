@@ -2,6 +2,7 @@ package server.databaseManagement;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import server.TransferImage;
 import server.requests.Task;
 import server.requests.*;
 

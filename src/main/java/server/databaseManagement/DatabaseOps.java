@@ -104,21 +104,14 @@ public class DatabaseOps {
     }
 
     public boolean doesUsernameAlreadyExist( String username ) throws SQLException{
-       // System.out.println("flag 1 -> doesUserNameAlreadyExists");
         String query = " SELECT * FROM Users WHERE username = ? ";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,username);
         ResultSet resultSet = statement.executeQuery();
         int usersNumber = 0;
-        //System.out.println("usernameNumber 1 : " + usersNumber);
-        //System.out.println(resultSet.toString());
         while (resultSet.next()){
-            //System.out.println(" found something ");
-            //String un = resultSet.getString("username");
-            //System.out.println(un);
             usersNumber ++;
         }
-        //System.out.println("usernameNumber 2 : " + usersNumber);
         return usersNumber > 0;
     }
 
@@ -288,9 +281,9 @@ public class DatabaseOps {
 
     public int addNewPost( Blob img, Date uploaded, int ownerId, String caption, String ownerName ) throws SQLException{
         String query = " INSERT INTO Posts " +
-                " ( img, uploaded, userId, ownerName, caption, likes, comments ) " +
+                " ( image, uploaded, userId, ownerName, caption, likes, comments ) " +
                 " VALUES " +
-                " ( ? , ? , ? , ? , ? )";
+                " ( ? , ? , ? , ? , ? , ? , ?)";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setBlob(1, img);
         statement.setDate(2, uploaded);

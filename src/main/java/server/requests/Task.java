@@ -1,5 +1,6 @@
 package server.requests;
 
+import server.TransferImage;
 import server.databaseManagement.ManagerHolder;
 
 import java.sql.SQLException;
@@ -7,6 +8,11 @@ import java.sql.SQLException;
 abstract public class Task {
     protected String task;
     public int currentUserId;
+    public TransferImage transferImage;
+
+    public void setTransferImage(TransferImage transferImage) {
+        this.transferImage = transferImage;
+    }
 
     abstract public String doTask(ManagerHolder managerHolder) throws SQLException;
 

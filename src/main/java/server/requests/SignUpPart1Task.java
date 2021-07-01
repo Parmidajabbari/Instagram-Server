@@ -26,7 +26,7 @@ public class SignUpPart1Task extends Task{
                 int code = (int) Math.floor(Math.random() * (max - min + 1) + min);
                 String message = " Your Email Verification Code is: \n" + "\t" + code;
                 String title = "Instagram Verification";
-                //GoogleMail.Send(email, title, message);
+                GoogleMail.Send(email, title, message);
                 System.out.println(message);
                 databaseOps.addNewVCode(username, code);
                 result = "{'task' : 'signUpPart1', 'error' : false, 'Result' : 'A code has been sent to your email.'}";

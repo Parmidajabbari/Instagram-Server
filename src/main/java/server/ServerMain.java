@@ -18,7 +18,6 @@ public class ServerMain {
 
         while (true) {
             server.setConnection();
-
             TaskListener listener = new TaskListener(server.getOutput(), server.getInput());
             pool.execute(listener);
         }

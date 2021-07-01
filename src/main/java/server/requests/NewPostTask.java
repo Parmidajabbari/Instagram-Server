@@ -1,5 +1,6 @@
 package server.requests;
 
+import server.SSSocket;
 import server.databaseManagement.DatabaseOps;
 import server.databaseManagement.ManagerHolder;
 
@@ -10,9 +11,9 @@ import java.util.Base64;
 
 public class NewPostTask extends server.requests.Task {
 
-    String image;
+    //byte[] image;
     String caption;
-    String ownerName;
+    //String ownerName;
 
 
     @Override
@@ -20,9 +21,12 @@ public class NewPostTask extends server.requests.Task {
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         try {
-            ownerName = databaseOps.idToUsername(currentUserId);
-            byte[] binaryImage = Base64.getDecoder().decode(image);
-            Blob blob = new SerialBlob(binaryImage);
+            //image = transferImage.getInput();
+            SSSocket socket = transferImage.getSsSocket();
+            byte[] image = socket.readMessage();
+            String ownerName = databaseOps.idToUsername(currentUserId);
+            //byte[] binaryImage = Base64.getDecoder().decode(image);
+            Blob blob = new SerialBlob(image);
             Date date = new Date(System.currentTimeMillis());
             int postId = databaseOps.addNewPost(blob, date, currentUserId, caption, ownerName);
             result = "{'task' : 'newPost', 'error' : false, 'Result' : " + postId +" }";

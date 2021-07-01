@@ -28,10 +28,10 @@ public class TaskListener implements Runnable {
         while (isOnline) {
 
             try {
+                TransferImage transferImage = new TransferImage(input, output);
                 String message = input.readUTF();
-
                 // doTask(message);
-                TaskHandler taskHandler = new TaskHandler(message);
+                TaskHandler taskHandler = new TaskHandler(message, transferImage);
                 System.out.println(" json received from client:  " + message );
                 String response = taskHandler.doTask();
                 System.out.println(" response :  " + response );
