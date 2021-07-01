@@ -21,13 +21,13 @@ public class GoogleMail {
     }
 
     public static void Send(String recipientEmail,
-                            String title, String message) throws AddressException, MessagingException {
+                            String title, String message)throws Exception {
 
         GoogleMail.Send(username, password, recipientEmail, "", title, message);
     }
 
     private static void Send(final String username, final String password, String recipientEmail,
-                             String ccEmail, String title, String message) throws AddressException, MessagingException {
+                             String ccEmail, String title, String message) throws Exception {
 
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";

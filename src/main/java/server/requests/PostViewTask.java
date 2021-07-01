@@ -34,6 +34,7 @@ public class PostViewTask extends server.requests.Task {
                 Blob blob = post.getImage();
                 int blobLength = (int) blob.length();
                 byte[] binaryImg = blob.getBytes(1, blobLength);
+                transferImage.getOutput().writeUTF("getImage");
                 socket.sendMessage(binaryImg);
             }
         }

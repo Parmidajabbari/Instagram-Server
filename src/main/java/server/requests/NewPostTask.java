@@ -33,6 +33,7 @@ public class NewPostTask extends server.requests.Task {
         }
         catch (Exception e){
             result = "{'task' : 'newPost', 'error' : true, 'Result' : 'Something went wrong! Pleas try again'}";
+            e.printStackTrace();
         }
         return result;
     }

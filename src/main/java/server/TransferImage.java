@@ -17,7 +17,13 @@ public class TransferImage {
         this.ssSocket = ssSocket;
     }
 
+    public DataOutputStream getOutput() {
+        return output;
+    }
+
     public TransferImage(DataInputStream input, DataOutputStream output ) {
+        this.output = output;
+        this.input = input;
         this.ssSocket = new SSSocket(input,output);
     }
 
