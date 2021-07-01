@@ -33,17 +33,17 @@ public class MySQLAccess {
 
         // Create Users table
         statement.execute( "CREATE TABLE IF NOT EXISTS Users (\n" +
-                "  Id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
-                "  Username varchar(25) DEFAULT NULL,\n" +
-                "  Password varchar(25) DEFAULT NULL,\n" +
-                "  Firstname varchar(45) DEFAULT NULL,\n" +
-                "  Lastname varchar(45) DEFAULT NULL,\n" +
-                "  Created date DEFAULT NULL,\n" +
-                "  Bio varchar(255) DEFAULT NULL,\n" +
-                "  Email varchar(255) DEFAULT NULL,\n" +
-                "  FollowersNumber int(11) DEFAULT NULL,\n" +
-                "  FollowingNumber int(11) DEFAULT NULL,\n" +
-                "  ProPic mediumblob DEFAULT NULL,\n" +
+                "  id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
+                "  username varchar(25) DEFAULT NULL,\n" +
+                "  password varchar(25) DEFAULT NULL,\n" +
+                "  firstname varchar(45) DEFAULT NULL,\n" +
+                "  lastname varchar(45) DEFAULT NULL,\n" +
+                "  created date DEFAULT NULL,\n" +
+                "  bio varchar(255) DEFAULT NULL,\n" +
+                "  email varchar(255) DEFAULT NULL,\n" +
+                "  followersNumber int(11) DEFAULT NULL,\n" +
+                "  followingNumber int(11) DEFAULT NULL,\n" +
+                "  proPic mediumblob DEFAULT NULL,\n" +
                 //"  PRIMARY KEY (userid), \n" +
                 "  CONSTRAINT user_info UNIQUE(username),\n" +
                 "  CONSTRAINT email_info UNIQUE(email)" +

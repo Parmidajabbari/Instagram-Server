@@ -15,7 +15,11 @@ public class DatabaseOps {
         conn = mySQLAccess.getConnect();
     }
 
-    public void deleteCode(){
+    public void deleteCode() throws SQLException {
+
+        String query = " INSERT INTO Users ( username , email ) VALUES ( 'salamuser' , 'salamemail' ) ";
+        Statement statement = conn.createStatement();
+        statement.execute(query);
 
     }
 
@@ -100,23 +104,30 @@ public class DatabaseOps {
     }
 
     public boolean doesUsernameAlreadyExist( String username ) throws SQLException{
-        String query = " SELECT COUNT(*) FROM Users WHERE username = ? ";
+       // System.out.println("flag 1 -> doesUserNameAlreadyExists");
+        String query = " SELECT * FROM Users WHERE username = ? ";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,username);
         ResultSet resultSet = statement.executeQuery();
-        int usersNumber = -1;
+        int usersNumber = 0;
+        //System.out.println("usernameNumber 1 : " + usersNumber);
+        //System.out.println(resultSet.toString());
         while (resultSet.next()){
+            //System.out.println(" found something ");
+            //String un = resultSet.getString("username");
+            //System.out.println(un);
             usersNumber ++;
         }
+        //System.out.println("usernameNumber 2 : " + usersNumber);
         return usersNumber > 0;
     }
 
     public boolean doesEmailAlreadyExist( String email ) throws SQLException{
-        String query = " SELECT COUNT(*) FROM Users WHERE email = ? ";
+        String query = " SELECT * FROM Users WHERE email = ? ";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1,email);
         ResultSet resultSet = statement.executeQuery();
-        int emailsNumber = -1;
+        int emailsNumber = 0;
         while (resultSet.next()){
             emailsNumber ++;
         }
@@ -135,21 +146,22 @@ public class DatabaseOps {
     }
 
     public boolean isCodeCorrect( String username, int code )throws SQLException{
-        String query = "SELECT code FROM Verification WHERE username = ?";
+        String query = "SELECT * FROM Verification WHERE username = ?";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1, username);
         ResultSet resultSet = statement.executeQuery();
         int userCode = -1;
+        System.out.println(" current code :  " + code );
         while( resultSet.next() ){
             userCode = resultSet.getInt("code");
-            System.out.println(userCode);
+            System.out.println( "code in data base :  " + userCode);
         }
         return code == userCode;
     }
 
     public int addNewUser (String username, String email, String password, Date created )throws SQLException{
         String query = "INSERT INTO Users " +
-                "(Username, Password, Created, Email, FollowersNumber, FollowingNumber)" +
+                "(username, password, created, email, followersNumber, followingNumber)" +
                 "VALUES" +
                 "( ? , ? , ? , ? , ? , ? )";
         PreparedStatement statement = conn.prepareStatement(query);

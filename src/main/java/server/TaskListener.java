@@ -32,7 +32,9 @@ public class TaskListener implements Runnable {
 
                 // doTask(message);
                 TaskHandler taskHandler = new TaskHandler(message);
+                System.out.println(" json received from client:  " + message );
                 String response = taskHandler.doTask();
+                System.out.println(" response :  " + response );
                 output.writeUTF(response);
             }
             catch (IOException | SQLException e) {

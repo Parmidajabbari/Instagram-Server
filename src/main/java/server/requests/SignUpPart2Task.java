@@ -18,6 +18,7 @@ public class SignUpPart2Task extends server.requests.Task {
         String result;
         Date date = new Date(System.currentTimeMillis());
         try {
+            System.out.println(" given username :   " + username);
             int userId = databaseOps.addNewUser(username, email, password, date);
             result = "{'task' : 'signUpPart2', 'error' : false, 'Result' : " + userId +" }";
         }
