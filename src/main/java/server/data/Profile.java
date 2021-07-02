@@ -31,7 +31,6 @@ public class Profile {
         this.bio = bio;
         this.followersNumber = followersNumber;
         this.followingNumber = followingNumber;
-        this.proPic = convertToString(proPic);
     }
 
     public void setTask(String task) {
@@ -54,9 +53,5 @@ public class Profile {
         this.posts = posts;
     }
 
-    private String convertToString(Blob blob ) throws SQLException {
-        int blobLength = (int) blob.length();
-        byte[] binaryImg = blob.getBytes(1, blobLength);
-        return Base64.getEncoder().encodeToString(binaryImg);
-    }
+
 }
