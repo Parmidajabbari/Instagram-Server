@@ -9,11 +9,11 @@ public class DatabaseOps {
 
     private final Connection conn;
 
-
     public DatabaseOps (){
         MySQLAccess mySQLAccess = new MySQLAccess();
         conn = mySQLAccess.getConnect();
     }
+
 
     public void deleteCode() throws SQLException {
 
@@ -50,7 +50,6 @@ public class DatabaseOps {
         System.out.println("check Posts table");
 
     }
-
 
     public void unlikePost( int userId, int postId ) throws SQLException{
         String query = " DELETE FROM Likes WHERE postId = ? AND userId = ?";
@@ -350,14 +349,14 @@ public class DatabaseOps {
         int followingNumber = 0;
         boolean check = false;
         while (resultSet.next()){
-            userName = resultSet.getString("Username");
-            firstName = resultSet.getString("Firstname");
-            lastName = resultSet.getString("Lastname");
-            created = resultSet.getDate("Created");
-            bio = resultSet.getString("Bio");
-            followersNumber = resultSet.getInt("FollowersNumber");
-            followingNumber = resultSet.getInt("FollowingNumber");
-            proPic = resultSet.getBlob("ProPic");
+            userName = resultSet.getString("username");
+            firstName = resultSet.getString("firstname");
+            lastName = resultSet.getString("lastname");
+            created = resultSet.getDate("created");
+            bio = resultSet.getString("bio");
+            followersNumber = resultSet.getInt("followersNumber");
+            followingNumber = resultSet.getInt("followingNumber");
+            proPic = resultSet.getBlob("proPic");
             check = true;
         }
         if( check )
@@ -408,8 +407,9 @@ public class DatabaseOps {
         }
         return img;
     }
+
     public void changeBio( int userId, String bio ) throws SQLException{
-        String query = " UPDATE Users SET Bio = ? WHERE Id = ? ";
+        String query = " UPDATE Users SET bio = ? WHERE Id = ? ";
         PreparedStatement statement = conn.prepareStatement(query);
         statement.setString(1, bio);
         statement.setInt(2, userId);
@@ -552,7 +552,5 @@ public class DatabaseOps {
         }
         return followers;
     }
-
-
 
 }

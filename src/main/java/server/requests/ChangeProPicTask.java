@@ -1,5 +1,6 @@
 package server.requests;
 
+import server.SSSocket;
 import server.databaseManagement.DatabaseOps;
 import server.databaseManagement.ManagerHolder;
 
@@ -17,13 +18,14 @@ public class ChangeProPicTask extends Task{
         DatabaseOps databaseOps = managerHolder.getDataBase();
         String result;
         try {
-            byte[] binaryImage = Base64.getDecoder().decode(newPhoto);
-            Blob blob = new SerialBlob(binaryImage);
+            SSSocket socket = transferImage.getSsSocket();
+            byte[] image = socket.readMessage();
+            Blob blob = new SerialBlob(image);
             databaseOps.changeProfilePicture(currentUserId, blob);
-            result = "{'task' : 'changeProPic', 'error' : false, 'Result' : 'done' }";
+            result = "{'task' : 'changeProPic', 'error' : false, 'Result' : 'done'}";
         }
         catch (Exception e){
-            result = "{'task' : 'changeProPic', 'error' : true, 'Result' : 'Something went wrong!}";
+            result = "{'task' : 'changeProPic', 'error' : true, 'Result' : 'Something went wrong!'}";
         }
         return result;
     }
